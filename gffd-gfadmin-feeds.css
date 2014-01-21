@@ -1,0 +1,47 @@
+.gffd-inactive-feed a{
+	color: rgba(0, 0, 0, 0.38);
+}
+
+.gffd-active-header a{
+	color: rgb(152, 202, 152);
+}
+
+.gffd-inactive-header a{
+	color: rgb(202, 152, 158);
+}
+
+.gffd-side-tab-boxes:hover{
+	height:auto;
+}
+
+
+.gffd-feed-tag{
+	padding: 3px 5px;
+	color: white;
+	border-radius: 5px;
+	margin: 0 10px;
+	background: rgb(207, 207, 207);
+	display: inline-block;
+}
+
+.gffd-feed-tag.active{
+	background: green;
+}
+
+.gffd-feed-tag.inactive{
+
+}
+
+small.description{
+	color: rgba(0, 0, 0, 0.37);
+	font-size: 86%;
+	font-style: italic;
+}
+
+select.good{
+	color:rgb(45, 116, 45);
+}
+
+select.error{
+	color:red;
+}

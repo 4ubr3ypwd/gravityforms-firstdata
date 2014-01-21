@@ -1,0 +1,9 @@
+== Naomi C. Bush ==
+
+Special thanks to Naomi C. Bush and her 
+Gravity Forms Stripe plugin.
+
+https://github.com/naomicbush/Gravity-Forms-Stripe
+
+I was able to use her plugin to help me develop this one.
+Some code contribution came directly from her plugin.

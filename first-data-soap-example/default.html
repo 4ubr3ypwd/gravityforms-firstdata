@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<!--
+**
+* First Data Global Gateway e4℠
+*
+* Copyright (c) 2004-2010.  All Rights Reserved.
+*
+* YOUR RIGHTS WITH RESPECT TO THIS SOFTWARE IS GOVERNED BY THE
+* TERMS AND CONDITIONS SET FORTH IN THE CORRESPONDING EULA.
+*
+* Last Updated: January 26, 2010
+**
+-->
+<HTML>
+<HEAD>
+	<title>POS</title>
+</HEAD>
+<body>
+	<form action="process.php" method="post">
+		<table cellSpacing="0" cellPadding="0" width="660" align="left" border="0">
+			<tr><td>
+			<table cellSpacing="0" cellPadding="0" width="660" align="left" border="0">
+<tr>
+	<td><font face="verdana,arial,helvetica" size="5"><b>First Data Global Gateway e4℠ POS</b></font></td>
+</tr>
+
+			</table></td></tr>
+			<tr><td>
+			<table cellSpacing="6" cellPadding="0" width="660" align="left" border="0">
+				<tr>
+					<td align="right"><font face="verdana,arial,helvetica" size="2"><b>Gateway ID</b></font></td>
+					<td><input name="ddlPOS_ExactID" id="ddlPOS_ExactID" style="width:125px;" value=""/>
+					</td>
+					
+            <td style="WIDTH: 158px" align="right"> <font face="verdana,arial,helvetica" size="2"><b>Dollar</b></font></td>
+					<td><input name="tbPOS_DollarAmount" type="text" value="1.01" maxlength="8" id="tbPOS_DollarAmount" tabindex="4" style="width:122px;" /></td>
+				</tr>
+				<tr>
+					<td align="right"><font face="verdana,arial,helvetica" size="2"><b>Transaction Type</b></font></td>
+
+					<td colSpan="3">
+						<select name="ddlPOS_Transaction_Type" id="ddlPOS_Transaction_Type" style="width:452px;">
+							<option value="01">Pre-Auhorization</option>
+							<option value="05">Pre-Authorization Only</option>
+							<option value="02">Pre-Authorization Completion</option>
+							<option value="03">Forced Post</option>
+							<option selected="selected" value="00">Purchase</option>
+							<option value="11">Purchase Correction</option>
+							<option value="13">Void</option>
+							<option value="04">Refund</option>
+							<option value="12">Refund Correction</option>
+							<option value="40">Recurring Seed</option>
+							<option value="32">Tagged Pre-Authorization Completion</option>
+							<option value="30">Tagged Purchase</option>
+							<option value="34">Tagged Refund</option>
+							<option value="60">Secure Storage</option>
+						</select></td>
+				</tr>
+				<tr>
+					<td align="right"><font face="verdana,arial,helvetica" size="2"><b>Cardholder</b></font></td>
+					<td colSpan="3"><input name="tbPOS_CardHoldersName" type="text" value="PHP WebService Client" maxlength="50" id="tbPOS_CardHoldersName" tabindex="5" style="width:452px;" /></td>
+				</tr>
+				<tr>
+					<td align="right"><FONT face="verdana,arial,helvetica" size="2"><B>Card Number</B></FONT></td>
+					<td><input name="tbPOS_Card_Number" type="text" value="4111111111111111" maxlength="16" id="tbPOS_Card_Number" tabindex="9" style="width:150px;" /></td>
+					<td style="WIDTH: 158px" align="right"><FONT face="verdana,arial,helvetica" size="2"><B>Expiry Date</B></FONT></td>
+					<td>
+						<select name="ddlPOS_Expiry_Date_Month" id="ddlPOS_Expiry_Date_Month" style="width:61px;">
+							<option value="01">Jan</option>
+							<option value="02">Feb</option>
+							<option value="03">Mar</option>
+							<option value="04">Apr</option>
+							<option value="05">May</option>
+							<option value="06">Jun</option>
+							<option value="07">Jul</option>
+							<option value="08">Aug</option>
+							<option value="09">Sep</option>
+							<option value="10">Oct</option>
+							<option value="11">Nov</option>
+							<option value="Dec">Dec</option>
+						</select>
+						<select name="ddlPOS_Expiry_Date_Year" id="ddlPOS_Expiry_Date_Year" style="width:61px;">
+							<option value="12">2012</option>
+							<option value="13">2013</option>
+							<option value="14" selected>2014</option>
+						</select></td>
+					</tr>
+					
+				<tr>
+					<td align="right"><font face="verdana,arial,helvetica" size="2"><b>AVS</b></font></td>
+					<td colSpan="3"><input name="tbPOS_VerificationStr1" type="text" maxlength="40" id="tbPOS_VerificationStr1" style="width:452px;" /></td>
+				</tr>
+					
+					
+				<tr>
+					<td style="WIDTH: 158px" align="right"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Zip Code</font></strong></td>
+					<td colspan="3"><input name="tbPOS_ZipCode" type="text" id="tbPOS_ZipCode" style="width:100px;" maxlength="10"></td>
+				</tr>					
+				<tr>
+					<td style="WIDTH: 158px" align="right"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Tax 1 Amount</font></strong></td>
+					<td><input name="tbPOS_Tax1Amount" type="text" id="tbPOS_Tax1Amount" style="width:100px;" maxlength="10"></td>
+					<td style="WIDTH: 158px" align="right"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Tax 1 Number</font></strong></td>
+					<td><input name="tbPOS_Tax1Number" type="text" id="tbPOS_Tax1Number" style="width:100px;" maxlength="10"></td>
+				</tr>
+				<tr>
+					<td style="WIDTH: 158px" align="right"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Tax 2 Amount</font></strong></td>
+					<td><input name="tbPOS_Tax2Amount" type="text" id="tbPOS_Tax2Amount" style="width:100px;" maxlength="10"></td>
+					<td style="WIDTH: 158px" align="right"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Tax 2 Number</font></strong></td>
+					<td ><input name="tbPOS_Tax2Number" type="text" id="tbPOS_Tax2Number" style="width:100px;" maxlength="10"></td>
+				</tr>
+					
+					
+					
+					<tr>
+						<td align="right"><font face="verdana,arial,helvetica" size="2"><b>Transaction Tag</b></font></td>
+						<td><input name="tbPOS_Transaction_Tag" type="text" maxlength="9" id="tbPOS_Transaction_Tag" tabindex="11" style="width:122px;" /></td>
+						<td style="WIDTH: 158px" align="right"><font face="verdana,arial,helvetica" size="2"><b>Authorization No.</b></font></td>
+						<td><input name="tbPOS_Authorization_Num" type="text" maxlength="12" id="tbPOS_Authorization_Num" tabindex="12" style="width:122px;" /></td>
+					</tr>
+					<tr>
+						<td align="right"><FONT face="verdana,arial,helvetica" size="2"><B><FONT face="verdana,arial,helvetica" size="2"><B><FONT face="verdana,arial,helvetica" size="2"><B><FONT face="verdana,arial,helvetica" size="2"><B>Reference
+											No.</B></FONT></B></FONT></B></FONT></B></FONT></td>
+						<td><input name="tbPOS_Reference_No" type="text" maxlength="50" id="tbPOS_Reference_No" tabindex="6" style="width:122px;" /></td>
+						<td style="WIDTH: 158px" align="right"><font face="verdana,arial,helvetica" size="2"><b><FONT face="verdana,arial,helvetica" size="2"><B><FONT face="verdana,arial,helvetica" size="2"><B>Reference
+																3</B></FONT></B></FONT></b></font></td>
+						<td><input name="tbPOS_Reference_3" type="text" maxlength="30" id="tbPOS_Reference_3" tabindex="8" style="width:122px;" /></td>
+					</tr>
+					<tr>
+						<td style="WIDTH: 158px" align="right"><font face="verdana,arial,helvetica" size="2"><b><FONT face="verdana,arial,helvetica" size="2"><B><FONT face="verdana,arial,helvetica" size="2"><B>Customer Ref.</B></FONT></B></FONT></b></font></td>
+						<td><input name="tbPOS_Customer_Ref" type="text" maxlength="50" id="tbPOS_Customer_Ref" tabindex="7" style="width:122px;" /></td>
+						<td style="WIDTH: 163px" align="right"><font face="verdana,arial,helvetica" size="2"><b><FONT face="verdana,arial,helvetica" size="2"><B><FONT face="verdana,arial,helvetica" size="2"><B>Language</B></FONT></B></FONT></b></font></td>
+						<td>
+							<select name="ddlPOS_Language" id="ddlPOS_Language" style="width:125px;">
+								<option selected="selected" value="en">English</option>
+								<option value="fr">French</option>
+							</select></td>
+					</tr>
+					<tr>
+						<td style="WIDTH: 158px" align="right"><strong><font size="2" face="Verdana, Arial, Helvetica, sans-serif">Client E-mail</font></strong></td>
+						<td colspan="3"><input name="tb_Client_Email" type="text" id="tb_Client_Email" style="width:452px;"></td>
+					</tr>
+
+			<tr>
+						<td align="center" colSpan="4">&nbsp;<input type="submit" name="btnPOS_Submit" value="Process" id="btnPOS_Submit" style="width:335px;" /></td>
+					</tr>
+			</table></td></tr>
+		</table>
+	</form>
+</body>
+</HTML>
