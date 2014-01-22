@@ -5,5 +5,13 @@ Gravity Forms Stripe plugin.
 
 https://github.com/naomicbush/Gravity-Forms-Stripe
 
-I was able to use her plugin to help me develop this one.
+I was able to use her plugin concept to help me develop this one.
 Some code contribution came directly from her plugin.
+
+== First Data e4 PHP Wrapper ==
+
+Thanks to VinceG for his for the Global Gateway 
+PHP wrapper, which we use to perform the requests
+to FirstData.
+
+https://github.com/VinceG/php-first-data-api
