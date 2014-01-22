@@ -4,7 +4,7 @@ Donate link: http://excion.co?ref=wp_org_donate_gffd
 Tags: gravity forms, addon, first data, global gateway, global gateway e4, payments, credit card
 Requires at least: 3.7
 Tested up to: 3.9
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,6 +54,11 @@ This will stop Gravity Forms from submitting the entry and express a
 
 == Changelog ==
 
-= 1.0 =
+= 1.0.2 =
 
-- Initial release of the codebase from Excion
+- Fixes to possible __FILE__ conflict with other plugins
+- Release to WP.org
+
+= 1.0.1 =
+
+- Initial release version that went out to client projects
