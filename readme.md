@@ -1,6 +1,6 @@
 **Gravity Forms + First Data Global Gateway e4℠** is a plugin and addon for 
 Gravity Forms that will allow you to process products using the 
-First Data Global Gateway e4℠ API.
+[First Data Global Gateway e4℠](https://www.firstdata.com/en_us/products/merchants/ecommerce/online-payment-processing.html) service.
 
 # Install
 
