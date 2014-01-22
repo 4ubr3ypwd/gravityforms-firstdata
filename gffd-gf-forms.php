@@ -251,7 +251,7 @@ function gffd_gf_forms_js(){
 		'gffd-gf-forms-js',
 		plugins_url(
 			'gffd-gf-forms.js', 
-			___FILE___
+			___GFFDFILE___
 		),
 		array(),
 		'',

@@ -14,7 +14,7 @@ function gffd_admin_enqueue_css(){
 
 	wp_enqueue_style(
 		'gffd_admin_css',
-		plugins_url('gffd-gfadmin.css', ___FILE___),
+		plugins_url('gffd-gfadmin.css', ___GFFDFILE___),
 		array(),
 		'',
 		false
@@ -138,7 +138,7 @@ function gffd_admin_is_requested($requested_vars, $match_value=false){
 function gffd_admin_scripts(){
 	wp_enqueue_script(
 		'gffd-gf-admin-js',
-		plugins_url('gffd-gfadmin.js', ___FILE___),
+		plugins_url('gffd-gfadmin.js', ___GFFDFILE___),
 		array(),
 		'',
 		false

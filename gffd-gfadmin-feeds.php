@@ -36,7 +36,7 @@ function gffd_admin_feeds_page(){
 
 	wp_enqueue_style(
 		'gffd-admin-feeds-css',
-		plugins_url('gffd-gfadmin-feeds.css', ___FILE___),
+		plugins_url('gffd-gfadmin-feeds.css', ___GFFDFILE___),
 		array(),
 		'',
 		false
@@ -44,7 +44,7 @@ function gffd_admin_feeds_page(){
 
 	wp_enqueue_script(
 		'gffd-admi-feeds-js',
-		plugins_url('gffd-gfadmin-feeds.js', ___FILE___),
+		plugins_url('gffd-gfadmin-feeds.js', ___GFFDFILE___),
 		array(),
 		'',
 		false
