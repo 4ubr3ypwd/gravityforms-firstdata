@@ -1,5 +1,5 @@
 === Gravity Forms + First Data Global Gateway e4℠ ===
-Contributors: aubreypwd
+Contributors: aubreypwd, excion
 Donate link: http://excion.co?ref=wp_org_donate_gffd
 Tags: gravity forms, addon, first data, global gateway, global gateway e4, payments, credit card
 Requires at least: 3.7
@@ -15,6 +15,14 @@ Gravity Forms Addon for the First Data Global Gateway e4℠
 **Gravity Forms + First Data Global Gateway e4℠** is a plugin and addon for 
 Gravity Forms that will allow you to process products using the 
 [First Data Global Gateway e4℠](https://www.firstdata.com/en_us/products/merchants/ecommerce/online-payment-processing.html) service.
+
+= Development =
+
+Development for this plugins happens over at [Github](https://github.com/excion/gravityforms-firstdata).
+
+= Project =
+
+We use [Trello board](https://trello.com/b/lsE1MvCV) for managing the project.
 
 == Installation ==
 
