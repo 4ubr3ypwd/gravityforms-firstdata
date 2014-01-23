@@ -22,7 +22,7 @@ Development for this plugins happens over at [Github](https://github.com/excion/
 
 = Project =
 
-We use [Trello board](https://trello.com/b/lsE1MvCV) for managing the project.
+We use this public [Trello board](https://trello.com/b/lsE1MvCV) for managing the project.
 
 == Installation ==
 
