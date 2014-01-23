@@ -16,19 +16,6 @@ Gravity Forms Addon for the First Data Global Gateway e4℠
 Gravity Forms that will allow you to process products using the 
 [First Data Global Gateway e4℠](https://www.firstdata.com/en_us/products/merchants/ecommerce/online-payment-processing.html) service.
 
-= Development =
-
-Development for this plugins happens over at [Github](https://github.com/excion/gravityforms-firstdata).
-
-= Project =
-
-We use this public [Trello board](https://trello.com/b/lsE1MvCV) for managing the project.
-
-== Installation ==
-
-Install by uploading the zip or installing via your WordPress 
-dashboard.
-
 = Settings =
 
 Once installed you should setup your installation to work with your
@@ -51,15 +38,18 @@ needs to complete the purchase.
 
 Once you have done so, test your forms to ensure it is processing payment.
 
-= Debugging =
+= Development =
 
-To get debug information when a form is submitted, just use 
-(in `wp-config.php`):
+Development for this plugins happens over at [Github](https://github.com/excion/gravityforms-firstdata).
 
-	define('GFFD_DEBUG_FORM_SUBMIT', true);
+= Project =
 
-This will stop Gravity Forms from submitting the entry and express a
-`var_dump` and `exit()`.
+We use this public [Trello board](https://trello.com/b/lsE1MvCV) for managing the project.
+
+== Installation ==
+
+Install by uploading the .zip, or by searching for this plugin, 
+from WordPress Dashboard > Plugins > Add New.
 
 == Screenshots ==
 

@@ -2,34 +2,7 @@
 Gravity Forms that will allow you to process products using the 
 [First Data Global Gateway e4℠](https://www.firstdata.com/en_us/products/merchants/ecommerce/online-payment-processing.html) service.
 
-# Install
-
-To install, download a `.zip` file from the Downloads area to use, 
-upload to WordPress, and activate the plugin.
-
-## Setup
-
-Once installed you should setup your installation to work with your
-First Data Global Gateway e4℠ account by visiting 
-**Forms > Settings > First Data Global Gateway**. 
-
-From there you can link your install with your account. There is a 
-test mode for running test transactions with a FirstData demo account.
-
-## Setting Up Feeds
-
-In order to tell Gravity Forms + First Data Global Gateway e4℠ to process
-a certain form, you first have to setup a *feed*. You can do this
-by visiting **Forms > First Data Global Gateway**, and from here you can 
-activate individual forms to work with FirstData.
-
-You will need to tell Gravity Forms + First Data Global Gateway e4℠ 
-what fields, from the form, will supply FirstData with the information it
-needs to complete the purchase.
-
-Once you have done so, test your forms to ensure it is processing payment.
-
-# Troubleshooting
+You can use this plugin and get more information from the [WordPress.org](http://wordpress.org/plugins/gravity-forms-first-data-global-gateway-addon).
 
 ## How to Debug on Form Submit
 
