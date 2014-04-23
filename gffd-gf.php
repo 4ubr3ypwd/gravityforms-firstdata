@@ -313,12 +313,8 @@ function gffd_get_purchase_field_requirements(
 			'validate_pre_format'=>function($value){
 				if($value!=''){
 					return 
-						//Remove $
-						str_replace(
-							"$",
-							"",
-							$value
-						);
+						//Remove $ and comma
+						preg_replace ("/([^0-9\\.])/i", "", $value);
 				}else{
 					return false;
 				}
