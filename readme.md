@@ -7,7 +7,7 @@ _________________________
 Gravity Forms that will allow you to process products using the 
 [First Data Global Gateway e4](https://www.firstdata.com/en_us/products/merchants/ecommerce/online-payment-processing.html) service.
 
-You can use this plugin and get more information from the [WordPress.org](http://wordpress.org/plugins/gravity-forms-first-data-global-gateway-addon).
+You can use this plugin and get more information from [WordPress.org](http://wordpress.org/plugins/gravity-forms-first-data-global-gateway-addon).
 
 ## Issue Tracker
 
