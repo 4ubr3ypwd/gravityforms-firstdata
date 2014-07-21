@@ -1,4 +1,4 @@
-(Issue Tracker on Trello)[https://trello.com/b/iaFkdo91]
+[Issue Tracker on Trello](https://trello.com/b/iaFkdo91)
 
 _________________________
 
