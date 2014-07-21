@@ -1,9 +1,9 @@
 <?php
 
 /*
-Plugin Name: Gravity Forms + First Data Global Gateway e4℠
+Plugin Name: Gravity Forms + First Data Global Gateway e4
 Plugin URI: https://bitbucket.org/excion/gravityforms-firstdata
-Description: Gravity Forms + First Data Global Gateway e4℠ is a plugin and addon for Gravity Forms that will allow you to process products using the First Data Global Gateway e4℠ API.
+Description: Gravity Forms + First Data Global Gateway e4 is a plugin and addon for Gravity Forms that will allow you to process products using the First Data Global Gateway e4 API.
 Version: 1.0.2
 Author: Aubrey Portwood of Excion
 Author URI: http://excion.co

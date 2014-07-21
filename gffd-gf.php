@@ -129,7 +129,7 @@ add_action('admin_init','gffd_enable_cc');
 function gffd_glossary($key=null,$as_object=false){
 
 	$glossary=array(
-		'plugin_name'=>"Gravity Forms + First Data Global Gateway e4℠",
+		'plugin_name'=>"Gravity Forms + First Data Global Gateway e4",
 		'settings_name'=>"First Data Global Gateway",
 		'service_name'=>"First Data Global Gateway",
 	);
