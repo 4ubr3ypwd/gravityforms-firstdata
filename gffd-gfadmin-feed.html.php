@@ -59,7 +59,7 @@
 							<option value=""><?php _e("Choose a source for this data"); ?></option>
 							<option value="">--</option>
 							<?php foreach(gffd_is_array(gffd_get_form_fields(gffd_get_form(gffd_request('form_id')))) as $form_field){ ?>
-								<option <?php if( gffd_feeds_get_form_feed_settings( gffd_request( 'form_id' ) , 'as_object' )->feed_indexes->$required_field[ 'gffd_index' ] == $form_field[0] ){ ?>
+								<option <?php if( gffd_feeds_get_form_feed_settings( gffd_request( 'form_id' ) , 'as_object' )->feed_indexes[$required_field[ 'gffd_index' ]] == $form_field[0] ){ ?>
 									selected="selected"
 								<?php } ?> value="<?php echo $form_field[0]; ?>"><?php echo $form_field[1]; ?></option>
 							<?php } ?>
