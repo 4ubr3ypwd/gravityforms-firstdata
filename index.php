@@ -37,7 +37,7 @@ License: GPL2
 
 // First Data e4 PHP Wrapper
 // https://github.com/VinceG/php-first-data-api
-require_once "php-first-data-api/FirstData.php";
+require_once "php-first-data-api/src/VinceG/FirstDataApi/FirstData.php";
 
 // Primary API functions for FirstData.
 // Can be used w/out GF
