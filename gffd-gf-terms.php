@@ -30,7 +30,9 @@ function gffd_language_terms($as_object_or_index='whole_as_object'){
 	){
 		return json_decode(json_encode($terms));
 	}elseif(is_string($as_object_or_index)){
-		return $terms[$as_object_or_index];
+		if( isset( $terms[$as_object_or_index] ) ) {
+			return $terms[$as_object_or_index];
+		}
 	}elseif($as_object_or_index=='whole_as_object'){
 		return json_decode(json_encode($terms));
 	}
