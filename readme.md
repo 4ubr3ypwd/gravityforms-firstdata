@@ -8,6 +8,10 @@ Gravity Forms that will allow you to process products using the
 
 You can use this plugin and get more information from the [WordPress.org](http://wordpress.org/plugins/gravity-forms-first-data-global-gateway-addon).
 
+## Issue Tracker
+
+We use [Trello](https://trello.com/b/iaFkdo91) to track issues, you can sign up and participate at [https://trello.com/b/iaFkdo91](https://trello.com/b/iaFkdo91).
+
 ## How to Debug on Form Submit
 
 To get debug information when a form is submitted, just use 
