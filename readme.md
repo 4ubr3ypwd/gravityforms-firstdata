@@ -5,7 +5,7 @@ _________________________
 
 **Gravity Forms + First Data Global Gateway e4** is a plugin and addon for 
 Gravity Forms that will allow you to process products using the 
-[First Data Global Gateway e4℠](https://www.firstdata.com/en_us/products/merchants/ecommerce/online-payment-processing.html) service.
+[First Data Global Gateway e4](https://www.firstdata.com/en_us/products/merchants/ecommerce/online-payment-processing.html) service.
 
 You can use this plugin and get more information from the [WordPress.org](http://wordpress.org/plugins/gravity-forms-first-data-global-gateway-addon).
 
