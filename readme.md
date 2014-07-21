@@ -1,4 +1,5 @@
-[Issue Tracker on Trello](https://trello.com/b/iaFkdo91)
+[Issue Tracker on Trello](https://trello.com/b/iaFkdo91) | [Plugin on
+WordPress.org](http://wordpress.org/plugins/gravity-forms-first-data-global-gateway-addon)
 
 _________________________
 
