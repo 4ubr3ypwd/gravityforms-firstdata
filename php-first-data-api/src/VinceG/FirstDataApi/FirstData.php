@@ -41,7 +41,7 @@ class FirstData
 	protected $errorCode = 0;
 	/**
 	 * the error message if one exists
-	 * @var string 
+	 * @var string
 	 */
 	protected $errorMessage = '';
 	/**
@@ -168,7 +168,7 @@ class FirstData
 	}
 	/**
 	 * Set whether we are in a test mode or not
-	 * @param boolean $value 
+	 * @param boolean $value
 	 * @return void
 	 */
 	public function setTestMode($value) {
@@ -253,10 +253,10 @@ class FirstData
 		$this->setPostData('authorization_num', $number);
 		return $this;
 	}
-	
+
 	/**
 	 * set credit card address
-	 * VerificationStr1 is comprised of the following constituent address values: Street, Zip/Postal Code, City, State/Provence, Country.  
+	 * VerificationStr1 is comprised of the following constituent address values: Street, Zip/Postal Code, City, State/Provence, Country.
 	 * They are separted by the Pipe Character "|".
 	 *	Street Address|Zip/Postal|City|State/Prov|Country
 	 *
@@ -330,8 +330,8 @@ class FirstData
 	 * @param string $number
 	 * @return object
 	 */
-	public function setCustomerNumber($number){
-		$this->setPostData('customer_number', $number);
+	public function setCustomerReferenceNumber($number){
+		$this->setPostData('customer_ref', $number);
 		return $this;
 	}
 	/**
@@ -353,7 +353,7 @@ class FirstData
     	if (!$ch) {
       		$ch = curl_init();
     	}
-		
+
     	$opts = self::$CURL_OPTS;
     	$opts[CURLOPT_POSTFIELDS] = json_encode(array_merge($this->getPostData(), array('gateway_id' => $this->username, 'password' => $this->password, 'transaction_type' => $this->transactionType)));
     	$opts[CURLOPT_URL] = self::$testMode ? self::TEST_API_URL . $this->apiVersion : self::LIVE_API_URL . $this->apiVersion;
@@ -402,7 +402,7 @@ class FirstData
 
 		// Reset
 		$this->postFields = array();
-		
+
 		return $this->getResponse();
     }
 	/**
@@ -416,12 +416,12 @@ class FirstData
 		if(!in_array($headers['http_code'], array(200, 201, 202))) {
 			return true;
 		}
-		
+
 		// Make sure the response does not have error in it
 		if(!$response || !count($response)) {
 			return true;
 		}
-		
+
 		// Do we have an error code
 		if($this->getErrorCode() > 0) {
 			return true;
@@ -436,12 +436,12 @@ class FirstData
 		if($this->getExactResponseCode() > 0) {
 			return true;
 		}
-		
+
 		// No error
 		return false;
 	}
 	/**
-	 * Was the last call successful 
+	 * Was the last call successful
 	 * @return boolean
 	 */
 	public function isSuccess() {
@@ -456,7 +456,7 @@ class FirstData
 		return $this->getValueByKey($this->getArrayResponse(), 'transaction_approved');
 	}
 	/**
-	 * Get transaction record/receipt 
+	 * Get transaction record/receipt
 	 * @return string
 	 */
 	public function getTransactionRecord() {
@@ -565,7 +565,7 @@ class FirstData
 	}
 	/**
 	 * Get the response data
-	 * 
+	 *
 	 * @return mixed the response data
 	 */
 	public function getResponse() {
@@ -583,7 +583,7 @@ class FirstData
 	}
 	/**
 	 * Get the headers
-	 * 
+	 *
 	 * @return array the headers returned from the call
 	 */
 	protected function getHeaders() {
@@ -601,7 +601,7 @@ class FirstData
 	}
 	/**
 	 * Get the error code number
-	 * 
+	 *
 	 * @return integer error code number
 	 */
 	public function getErrorCode() {
@@ -619,7 +619,7 @@ class FirstData
 	}
 	/**
 	 * Get the error code message
-	 * 
+	 *
 	 * @return string error code message
 	 */
 	public function getErrorMessage() {
@@ -645,7 +645,7 @@ class FirstData
 		  		}
 		 	}
 		}
-	
+
 		// Nothing matched
 		return null;
 	}
