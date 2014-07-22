@@ -1,9 +1,25 @@
 <?php
 
+use VinceG\FirstDataApi\FirstData;
+
+// Bypass having to send by reference
+function gffd_end( $var ) {
+	return end( $var );
+}
+
+// Assign data no matter what is in the array.
+function gffd_fd_form_info( $key, $gffd_fd_form_info ) {
+	if( isset( $gffd_fd_form_info[ $key ] ) ) {
+		return $gffd_fd_form_info[ $key ];
+	} else {
+		return false;
+	}
+}
+
 // Perform the purchase by sending date submitted
 // by a form.
 function gffd_fd_purchase_by_form(
-	$gffd_fd_form_info, 
+	$gffd_fd_form_info,
 	$echo_or_as_object=false
 ){
 
@@ -43,56 +59,80 @@ function gffd_fd_purchase_by_form(
 		$gffd_fd_test_mode
 	);
 
+	// Make sure there is <something> in the cc_type field.
+	if( ! isset( $gffd_fd_form_info['gffd_fd_cc_type'] ) ) {
+		$gffd_fd_form_info['gffd_fd_cc_type'] = '';
+	}
+
 	// Information on formatting: http://goo.gl/46V13c
 	$gffd_fd_info = array(
-		'gffd_fd_cc_type' => $gffd_fd_form_info['gffd_fd_cc_type'],
-		'gffd_fd_cc_number' => $gffd_fd_form_info['gffd_fd_cc_number'],
-		
+		'gffd_fd_cc_type' => gffd_fd_form_info( 'gffd_fd_cc_type', $gffd_fd_form_info ),
+		'gffd_fd_cc_number' => gffd_fd_form_info( 'gffd_fd_cc_number', $gffd_fd_form_info ),
+
 		// Because GF credit card field only allows the name to be
 		// entered in "First and Last" in one input, we stored it
-		// in cc_firstname. 
-		// 
+		// in cc_firstname.
+		//
 		// Get the first name from the "John" in "John Doe".
 		'gffd_fd_cc_firstname' => (
-			current(explode(" ", $gffd_fd_form_info['gffd_fd_cc_firstname']))
+			current(
+				explode(
+					" ",
+					gffd_fd_form_info(
+						'gffd_fd_cc_firstname',
+						$gffd_fd_form_info
+					)
+				)
+			)
 		),
 
 		// Get the last name from the "Doe" in "John Doe".
 		'gffd_fd_cc_lastname' => (
-			end(explode(" ", $gffd_fd_form_info['gffd_fd_cc_firstname']))
+			gffd_end(
+				explode(
+					" ", 
+					gffd_fd_form_info( 
+						'gffd_fd_cc_firstname',
+						$gffd_fd_form_info
+					)
+				)
+			)
 		),
 
-		'gffd_fd_cc_exp' => $gffd_fd_form_info['gffd_fd_cc_exp'], //mmyy
-		'gffd_fd_cc_amount' => $gffd_fd_form_info['gffd_fd_cc_amount'],
-		'gffd_fd_cc_zip' => $gffd_fd_form_info['gffd_fd_cc_zip'],
-		'gffd_fd_cc_cvv' => $gffd_fd_form_info['gffd_fd_cc_cvv'],
+		'gffd_fd_cc_exp' => gffd_fd_form_info( 'gffd_fd_cc_exp', $gffd_fd_form_info ), //mmyy
+		'gffd_fd_cc_amount' => gffd_fd_form_info( 'gffd_fd_cc_amount', $gffd_fd_form_info ),
+		'gffd_fd_cc_zip' => gffd_fd_form_info( 'gffd_fd_cc_zip', $gffd_fd_form_info ),
+		'gffd_fd_cc_cvv' => gffd_fd_form_info( 'gffd_fd_cc_cvv', $gffd_fd_form_info ),
 
 		// The $gffd_fd_form_info passed to this function has the
 		// address data segregated. Here, let's combine it the way
 		// First Data likes it.
 		'gffd_fd_cc_address'=>(
 				//Address
-				 $gffd_fd_form_info['gffd_fd_cc_address']
-					." ". $gffd_fd_form_info['gffd_fd_cc_address2']
+				 gffd_fd_form_info( 'gffd_fd_cc_address', $gffd_fd_form_info )
+					." ". gffd_fd_form_info( 'gffd_fd_cc_address2', $gffd_fd_form_info )
 
 				//Zip
-				."|".$gffd_fd_form_info['gffd_fd_cc_zip']
+				."|".gffd_fd_form_info( 'gffd_fd_cc_zip', $gffd_fd_form_info )
 
 				//City
-				."|".$gffd_fd_form_info['gffd_fd_cc_city']
+				."|".gffd_fd_form_info( 'gffd_fd_cc_city', $gffd_fd_form_info )
 
 				//State
-				."|".$gffd_fd_form_info['gffd_fd_cc_state']
+				."|".gffd_fd_form_info( 'gffd_fd_cc_state', $gffd_fd_form_info )
 
 				//Country
-				."|".$gffd_fd_form_info['gffd_fd_cc_country']
+				."|".gffd_fd_form_info( 'gffd_fd_cc_country', $gffd_fd_form_info )
 		),
+
+		// Set to false at least
+		'gffd_fd_cc_address2' => ''
 	);
 
 	$purchase_action_result=
 		gffd_fd_perform_auth_purchase( $fd_request, $gffd_fd_info );
 
-	if($echo_or_as_object===true 
+	if($echo_or_as_object===true
 		|| $echo_or_as_object=='echo'
 		|| $echo_or_as_object=='json'
 	){
@@ -109,6 +149,7 @@ function gffd_fd_purchase_by_form(
 // via $_REQUEST.
 function gffd_fd_purchase_by_request(){
 	$gffd_fd_purchase_by_request = new FirstData(
+
 		// Gateway ID from Terminal > Settings.
 		$_REQUEST['gffd_fd_gateway_id'],
 
@@ -132,10 +173,10 @@ function gffd_fd_purchase_by_request(){
 	);
 
 	$result = gffd_fd_perform_auth_purchase(
-		$gffd_fd_purchase_by_request, 
+		$gffd_fd_purchase_by_request,
 		$gffd_fd_info
 	);
-	
+
 	echo json_encode($result);
 }
 

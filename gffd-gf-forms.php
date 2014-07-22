@@ -80,7 +80,7 @@ function gffd_validation_and_payment($validation_result){
 						]
 					] = $gffd_is_valid_pre_format_feed_data;
 
-				// If even one of the items fail, jump out, 
+				// If even one of the items fail, jump out,
 				// thrown an error and try again.
 				}else{
 
@@ -110,7 +110,7 @@ function gffd_validation_and_payment($validation_result){
 			// Okay, one of the fields were missing.
 			}else{
 				// If a field is missing, let's just do nothing and submit
-				// the form. But, we will at least email the admin about it, 
+				// the form. But, we will at least email the admin about it,
 				// because we did not do the purchase.
 			}
 
@@ -128,80 +128,81 @@ function gffd_validation_and_payment($validation_result){
 
 			$result = gffd_fd_purchase_by_form($gffd_fd_form_info, 'as_original');
 
-			if(gffd_is_array($result)){
+			if( gffd_is_array($result) && ! $result['error_message'] && ! defined('GFFD_DEBUG_FORM_SUBMIT') ){
 				if($result['error']){
-					wp_die($result['error_message']);
-				}				
-			}
+					wp_die( __( "There was an error, but FirstData didn't send back an error message." ) );
+				}
+			} else {
 
-			// To debug just use define('GFFD_DEBUG_FORM_SUBMIT', true);
-			// in wp-config.php
-			if(defined('GFFD_DEBUG_FORM_SUBMIT')){
+				// To debug just use define('GFFD_DEBUG_FORM_SUBMIT', true);
+				// in wp-config.php
+				if(defined('GFFD_DEBUG_FORM_SUBMIT')){
 
-				echo "<pre>";
-					var_dump(
-						//$result['gffd_fd_instance']->getBankResponseMessage()
-						$result
-					);
-				echo "</pre>";
+					echo "<pre>";
+						var_dump(
+							//$result['gffd_fd_instance']->getBankResponseMessage()
+							$result
+						);
+					echo "</pre>";
 
-				exit;
+					exit;
 
-			// If the dev doesn't want to GFFD_DEBUG_FORM_SUBMIT
-			}else{
-
-				// If there was an error, and we've submitted
-				// the data for purchase, let's see what the 
-				// bank or FirstData class said.
-				if($result['error']===true){
-
-					// Don't submit the entry.
-					$validation_result["is_valid"]=false;
-
-					// If there is a bank response, let's 
-					// pass that to the CC field
-					if($result['gffd_fd_instance']->getBankResponseMessage()){
-						$validation_result
-							=gffd_wp_die_by_fd_response(
-								$result,
-								'getBankResponseMessage'
-							);
-						
-					}elseif($result['gffd_fd_instance']->getErrorMessage()){
-						// Try and see if there is just a generic
-						// error message.
-						$validation_result
-							=gffd_wp_die_by_fd_response(
-								$result,
-								'getErrorMessage'
-							);
-					}
-
-					return $validation_result;
-
-				// If there was no bank response, but an error,
-				// we don't know what is wrong!
+				// If the dev doesn't want to GFFD_DEBUG_FORM_SUBMIT
 				}else{
 
-					// Throw a general error message.
-					foreach($validation_result['form']['fields'] as &$field){
-						if($field['type']=='creditcard'){
-							// Tell GF what field failed. Here, 
-							// always the CC.
-							$field["failed_validation"]=true;
+					// If there was an error, and we've submitted
+					// the data for purchase, let's see what the
+					// bank or FirstData class said.
+					if($result['error']===true){
 
-							// Pass the bank response back to 
-							// GF validation_message.
-							$field["validation_message"]
-								= __(
-									"Sorry, but there was an error with the"
-									."information provided. Please correct and try again. "
-									."If this persists, contact the site owner."
+						// Don't submit the entry.
+						$validation_result["is_valid"]=false;
+
+						// If there is a bank response, let's
+						// pass that to the CC field
+						if($result['gffd_fd_instance']->getBankResponseMessage()){
+							$validation_result
+								=gffd_wp_die_by_fd_response(
+									$result,
+									'getBankResponseMessage'
+								);
+
+						}elseif($result['gffd_fd_instance']->getErrorMessage()){
+							// Try and see if there is just a generic
+							// error message.
+							$validation_result
+								=gffd_wp_die_by_fd_response(
+									$result,
+									'getErrorMessage'
 								);
 						}
-					}
 
-					return $validation_result;
+						return $validation_result;
+
+					// If there was no bank response, but an error,
+					// we don't know what is wrong!
+					}else{
+
+						// Throw a general error message.
+						foreach($validation_result['form']['fields'] as &$field){
+							if($field['type']=='creditcard'){
+								// Tell GF what field failed. Here,
+								// always the CC.
+								$field["failed_validation"]=true;
+
+								// Pass the bank response back to
+								// GF validation_message.
+								$field["validation_message"]
+									= __(
+										"Sorry, but there was an error with the"
+										."information provided. Please correct and try again. "
+										."If this persists, contact the site owner."
+									);
+							}
+						}
+
+						return $validation_result;
+					}
 				}
 			}
 
@@ -228,7 +229,7 @@ function gffd_wp_die_by_fd_response($result, $kind){
 	}
 
 	wp_die(
-		"<h1>".$message."</h1>" 
+		"<h1>".$message."</h1>"
 		."<br><br>"
 
 		.__(
@@ -250,7 +251,7 @@ function gffd_gf_forms_js(){
 	wp_enqueue_script(
 		'gffd-gf-forms-js',
 		plugins_url(
-			'gffd-gf-forms.js', 
+			'gffd-gf-forms.js',
 			___GFFDFILE___
 		),
 		array(),

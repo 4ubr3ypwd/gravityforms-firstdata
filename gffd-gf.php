@@ -6,7 +6,7 @@ require_once "gffd-gfadmin.php";
 //Add the Feed stuff
 require_once "gffd-gfadmin-feeds.php";
 
-// Include out terms library and 
+// Include out terms library and
 // keep it as a separate file
 // so it's easy to find.
 require_once 'gffd-gf-terms.php';
@@ -27,7 +27,7 @@ function gffd_get_validation_message_feed_data($gffd_index){
 				['validate_bad_message']
 		)
 	){
-		return 
+		return
 			call_user_func(
 				$gffd_get_purchase_field_requirements
 					['validate_bad_message']
@@ -46,7 +46,7 @@ function gffd_is_valid_pre_format_feed_data($gffd_index, $value){
 	if(is_callable(
 		$gffd_get_purchase_field_requirements['validate_pre_format']
 	)){
-		return 
+		return
 			call_user_func(
 				$gffd_get_purchase_field_requirements[
 					'validate_pre_format'
@@ -86,7 +86,7 @@ function gffd_feeds_get_form_feed_settings($form_id,$as_object=false){
 function gffd_feed_is_active($form_id){
 	if(
 		gffd_feeds_get_form_feed_settings(
-			$form_id, 
+			$form_id,
 			'as_object'
 		)->feed_active == 'active'
 	){
@@ -98,9 +98,9 @@ function gffd_feed_is_active($form_id){
 
 // Get the Gravity Forms plugin URL
 function gffd_plugin_url(){
-	$url = plugins_url() 
-	. '/' 
-	. basename(GFCommon::get_base_path()) 
+	$url = plugins_url()
+	. '/'
+	. basename(GFCommon::get_base_path())
 	. '/css/admin.css';
 
 	return $url;
@@ -158,7 +158,7 @@ function gffd_array_as_object($a){
 
 // These are the minimum fields we need to make a purchase.
 function gffd_get_purchase_field_requirements(
-		$as_object_or_gffd_index=false, 
+		$as_object_or_gffd_index=false,
 		$as_object=false
 ){
 	$fields=array(
@@ -186,7 +186,7 @@ function gffd_get_purchase_field_requirements(
 			}
 		),
 
-		// CCtype is different as GF does not submit the cctype, 
+		// CCtype is different as GF does not submit the cctype,
 		// though it can be selected from the feed.
 		array(
 			'gffd_index'=>'gffd_fd_cc_type',
@@ -200,21 +200,21 @@ function gffd_get_purchase_field_requirements(
 				);
 			},
 			'validate_pre_format'=>function($value){
-				
+
 				// Right now the value that is selected from the form
 				// feed setup does not work because GF does not send
 				// the cc type when it's submitted like you would think.
-				// 
-				// So, gffd-gf-forms.js should give us a 
+				//
+				// So, gffd-gf-forms.js should give us a
 				// $_REQUEST['gffd_cc_type']
 
 				if(
 					gffd_request('gffd_cc_type')
 				){
-						return 
+						return
 							gffd_request('gffd_cc_type');
 				}else{
-					return 
+					return
 						false;
 				}
 			}
@@ -257,16 +257,16 @@ function gffd_get_purchase_field_requirements(
 
 					// The value (when submitted by $_POST)
 					// is an array:
-					// 
+					//
 					// array(2) { [0]=> string(1) "1" [1]=> string(4) "2016" }
-					// 
+					//
 					// So, let's chop those two array
 					// structs into a value that is good for FD.
 					if(isset($value[0]) && isset($value[1])){
-						return 
+						return
 							// Tak on a 0 if we have 4, or 5, but not if
 							// we have 12
-							str_pad($value[0], 2, '0', STR_PAD_LEFT) 
+							str_pad($value[0], 2, '0', STR_PAD_LEFT)
 							. substr($value[1], -2);
 					}else{
 						return false;
@@ -296,7 +296,7 @@ function gffd_get_purchase_field_requirements(
 				}
 			}
 		),
-		
+
 		// Just make sure amount is a decimal float.
 		array(
 			'gffd_index'=>'gffd_fd_cc_amount',
@@ -312,7 +312,7 @@ function gffd_get_purchase_field_requirements(
 			},
 			'validate_pre_format'=>function($value){
 				if($value!=''){
-					return 
+					return
 						//Remove $
 						str_replace(
 							"$",
@@ -452,7 +452,7 @@ function gffd_get_purchase_field_requirements(
 			return gffd_array_as_object(
 				$fields
 			);
-	
+
 		// If it's not 'as_object', let's assume
 		// it's a gffd_index.
 		}else{
@@ -471,13 +471,13 @@ function gffd_get_purchase_field_requirements(
 					$_the_field
 				);
 
-			// If they just said 'gffd_fd_cc_zip' then return 
+			// If they just said 'gffd_fd_cc_zip' then return
 			// it as an array
 			}else{
 				return $_the_field;
 			}
 		}
-	
+
 	// If they pass (true), then just pass as an
 	// object.
 	}elseif($as_object_or_gffd_index==true){
@@ -502,13 +502,13 @@ function gffd_is_setup(){
 		// We are going to also need the password.
 		&& get_option('gffd_gateway_password')
 
-		// The test option may be off, 
-		// in that case it may not exist, which 
+		// The test option may be off,
+		// in that case it may not exist, which
 		// means that we are live!
-		// 
+		//
 		// So, we're not testing for it's setting
 		// here so we don't get false.
-		//  
+		//
 		// && get_option('gffd_test_mode')
 	){
 		return true;
@@ -540,18 +540,18 @@ function gffd_get_form_fields ( $form ) {
 		foreach ( $form["fields"] as $field ) {
 			if ( is_array( gffd_rgar( $field, 'inputs' ) ) ) {
 				foreach ( $field["inputs"] as $input ) {
-					 $fields[] = array( 
-						$input["id"], 
-						GFCommon::get_label( 
-							$field, 
-							$input["id"] 
-						) 
+					 $fields[] = array(
+						$input["id"],
+						GFCommon::get_label(
+							$field,
+							$input["id"]
+						)
 					);
 				}
 			}
 			else if ( ! gffd_rgar( $field, 'displayOnly' ) ) {
-				$fields[] = array( 
-					$field["id"], GFCommon::get_label( $field ) 
+				$fields[] = array(
+					$field["id"], GFCommon::get_label( $field )
 				);
 			}
 		}
@@ -560,8 +560,8 @@ function gffd_get_form_fields ( $form ) {
 	return $fields;
 }
 
-// Took from Gravity Forms Stripe plugin, 
-// because it's used in the function 
+// Took from Gravity Forms Stripe plugin,
+// because it's used in the function
 // gffd_get_form_fields().
 function gffd_rgar ( $array, $name ) {
 	if ( isset( $array[$name] ) )
@@ -576,7 +576,7 @@ function gffd_request($key){
 }
 
 // A bogus function to help us fix foreach
-// when array is not there so we 
+// when array is not there so we
 // don't fail foreach
 function gffd_is_array($possible_array){
 	if(is_array($possible_array)){
