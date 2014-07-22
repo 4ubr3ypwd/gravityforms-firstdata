@@ -205,6 +205,8 @@ function gffd_fd_process($gffd_fd__,$trans_type,$gffd_fd_info){
 			.$gffd_fd_info['gffd_fd_cc_address2']
 		)->setReferenceNumber(
 			time()
+		)->setCustomerNumber(
+			time()
 		)->process();
 
 	return $gffd_fd__;
