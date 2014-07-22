@@ -4,19 +4,82 @@
 // to perform a purchase on a GFFD
 // active form.
 
-function gffd_gform_entry_created( $entry, $the_submitted_form ){
-	// When it's created, we're fine with what is stored.
-	// But, in the future we may store more stuff.
+// Catch the entry after a successful purchase and save the reference
+// number.
+//
+// http://www.gravityhelp.com/documentation/page/Gform_entry_meta
+//
+function gffd_form_entry( $entry, $form_id ) {
+
+	// If we have a temp number saved, re-save in entry format.
+	// This should only happen once.
+
+	// Get the temp store of the reference number.
+	$customer_reference_number = get_option(
+
+		// Looking for something like gffd_fd_12_9.9.9.9
+		'gffd_fd_' . $form_id
+			. "_" . $_SERVER['REMOTE_ADDR']
+	);
+
+	// Re-store it for this entry
+	if( $customer_reference_number ) {
+
+		// Re-save for this entry id
+		update_option(
+			'gffd_fd_' . $entry['id'],
+			$customer_reference_number
+		);
+
+		// Remove the temp store
+		delete_option(
+			'gffd_fd_' . $form_id
+				. "_" . $_SERVER['REMOTE_ADDR']
+		);
+	}
+
+	// Reference number
+	$entry['gffd_fd_customer_reference_number'] => array(
+		'label' => __('Reference Number'),
+		'is_numberic' => false,
+		'is_default_column' => false,
+		'update_entry_meta_callback'
+
+			// Get the value from this function
+			=> 'gffd_form_customer_refererence_number'
+	);
+
+	// Add our new value.
+	return $entry;
+
 }
 
-add_action('gffd_gform_entry_created','gform_entry_created');
+function gffd_form_customer_refererence_number( $key, $lead, $form ) {
+
+	// This should have been stored by gffd_form_entry
+	$entry_customer_reference_number = get_option(
+
+		// TODO Is $lead the entry?
+		'gffd_fd_' . $lead['id']
+	);
+
+	if( $entry_customer_reference_number ){
+		return $entry_customer_reference_number;
+	}else{
+		return false;
+	}
+
+}
 
 // Validate the data, reformat the data,
 // try and perform the purchase and throw errors.
+//
+// Otherwise, do the purchase, save the reference number
+// and continue to adding entry.
 function gffd_validation_and_payment($validation_result){
 
 	$form_id = $validation_result['form']['id'];
-	$the_submitted_form=$_REQUEST; //for easier reading.
+	$the_submitted_form = $_REQUEST; //for easier reading.
 
 	// Is this form supposed to be used by gffd?
 	if( gffd_feed_is_active($form_id) ){
@@ -148,6 +211,18 @@ function gffd_validation_and_payment($validation_result){
 
 				// Save the reference number we saved in FD trasnsaction log
 				$gffd_fd_form_info['gffd_fd_customer_ref']
+			);
+
+			// Add an action to catch the entry when it is entered
+			add_action(
+
+				// For this specific form
+				'gform_entry_meta',
+
+				// This function
+				'gffd_form_entry',
+
+				10, 2
 			);
 
 			// Run a purchase by form
