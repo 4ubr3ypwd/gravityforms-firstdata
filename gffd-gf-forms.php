@@ -126,12 +126,59 @@ function gffd_validation_and_payment($validation_result){
 		// and perform the purchase.
 		}else{
 
-			$result = gffd_fd_purchase_by_form($gffd_fd_form_info, 'as_original');
+			// Set the customer reference number on FD
+			$gffd_fd_form_info['gffd_fd_customer_ref']
+				= gffd_fd_customer_ref( $form_id );
 
-			if( gffd_is_array($result) && ! $result['error_message'] && ! defined('GFFD_DEBUG_FORM_SUBMIT') ){
-				if($result['error']){
-					wp_die( __( "There was an error, but FirstData didn't send back an error message." ) );
-				}
+			// Save the reference number to the DB temporarily so we can
+			// get it later.
+			update_option(
+
+				// Save gffd_fd_form_#_#.#.#
+
+				// form_id shoudn't change: gffd_fd_12
+				"gffd_fd_$form_id"
+
+					// Remote IP shouldn't change:
+					// When the entry is added, we want to look for
+					//
+					// gffd_fd_12_9.9.9.9
+					//
+					. "_" . $_SERVER['REMOTE_ADDR'],
+
+				// Save the reference number we saved in FD trasnsaction log
+				$gffd_fd_form_info['gffd_fd_customer_ref']
+			);
+
+			// Run a purchase by form
+			$result = gffd_fd_purchase_by_form(
+				$gffd_fd_form_info,
+				'as_original'
+			);
+
+			if(
+				// If we have results
+				gffd_is_array($result)
+
+				// If there isn't an error message
+				&& ! $result['error_message']
+
+				// And, we haven't set debug mode in wp-config.php
+				&& ! defined('GFFD_DEBUG_FORM_SUBMIT')
+
+				// And there was some sort of error
+				&& $result['error']
+			){
+
+				// Just show a simple error.
+				wp_die( __(
+					"There was an error, but FirstData didn't
+						send back an error message."
+				) );
+
+				// Want to see what the error is? Just set
+				// define('GFFD_DEBUG_FORM_SUBMIT', true);
+				// in wp-config.php and try again
 			} else {
 
 				// To debug just use define('GFFD_DEBUG_FORM_SUBMIT', true);
@@ -261,5 +308,20 @@ function gffd_gf_forms_js(){
 }
 
 add_action('gform_enqueue_scripts','gffd_gf_forms_js');
+
+// Generate a reference number for FD
+function gffd_fd_customer_ref( $form_id ) {
+	return substr(
+
+		// Nice hash based on form id and the user's IP.
+		md5(
+			$form_id
+			. $_SERVER['REMOTE_ADDR']
+		),
+
+		// Only 8 chars
+		0, 8
+	);
+}
 
 ?>

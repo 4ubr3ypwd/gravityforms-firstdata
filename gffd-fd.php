@@ -90,8 +90,8 @@ function gffd_fd_purchase_by_form(
 		'gffd_fd_cc_lastname' => (
 			gffd_end(
 				explode(
-					" ", 
-					gffd_fd_form_info( 
+					" ",
+					gffd_fd_form_info(
 						'gffd_fd_cc_firstname',
 						$gffd_fd_form_info
 					)
@@ -125,8 +125,14 @@ function gffd_fd_purchase_by_form(
 				."|".gffd_fd_form_info( 'gffd_fd_cc_country', $gffd_fd_form_info )
 		),
 
-		// Set to false at least
-		'gffd_fd_cc_address2' => ''
+		// Set to something at least
+		'gffd_fd_cc_address2' => '',
+
+		// Set the entry ID of the form
+		'gffd_fd_customer_ref' => gffd_fd_form_info(
+			'gffd_fd_customer_ref',
+			$gffd_fd_form_info
+		)
 	);
 
 	$purchase_action_result=
@@ -204,9 +210,9 @@ function gffd_fd_process($gffd_fd__,$trans_type,$gffd_fd_info){
 			. " "
 			.$gffd_fd_info['gffd_fd_cc_address2']
 		)->setReferenceNumber(
-			time()
-		)->setCustomerNumber(
-			time()
+			$gffd_fd_info['gffd_fd_customer_ref']
+		)->setCustomerReferenceNumber(
+			$gffd_fd_info['gffd_fd_customer_ref']
 		)->process();
 
 	return $gffd_fd__;
