@@ -4,22 +4,67 @@
 // to perform a purchase on a GFFD
 // active form.
 
-function gffd_form_customer_refererence_number( $key, $lead, $form ) {
+// Show the customer reference number on the entry
+function gffd_gform_entry_detail_content_before( $form, $lead ) {
 
-	// This should have been stored by gffd_form_entry
-	$entry_customer_reference_number = get_option(
-
-		// TODO Is $lead the entry?
+	$customer_reference_number = get_option(
 		'gffd_fd_' . $lead['id']
 	);
 
-	if( $entry_customer_reference_number ){
-		return $entry_customer_reference_number;
-	}else{
-		return '';
+	if( $customer_reference_number ) {
+		?>
+		<table cellspacing="0" class="widefat fixed entry-detail-view">
+			<tbody>
+			<tr>
+				<td colspan="2" class="entry-view-field-name">
+					<?php _e( 'Customer Reference Number '); ?>
+				</td>
+			</tr>
+			<tr>
+				<td class="entry-view-field-value">
+					<?php echo $customer_reference_number; ?>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+		<?php
 	}
-
 }
+
+add_action(
+	'gform_entry_detail_content_before',
+	'gffd_gform_entry_detail_content_before',
+	10, 2
+);
+
+// Make sure, when the entry is entered,
+function gffd_gform_post_submission( $entry, $form ) {
+
+	// Get the temporary stored reference number saved on FD
+	$customer_reference_number = get_option(
+		//gffd_fd_12_9.9.9.9
+		"gffd_fd_" . $form['id'] . "_" . $_SERVER['REMOTE_ADDR']
+	);
+
+	if( $customer_reference_number ) {
+
+		// Re-store this information for this lead (entry)
+		update_option(
+			'gffd_fd_' . $entry['id'],
+			$customer_reference_number
+		);
+
+		// Delete the temp store
+		delete_option( "gffd_fd_" . $form['id'] . "_" . $_SERVER['REMOTE_ADDR'] );
+
+	}
+}
+
+add_action(
+	'gform_post_submission',
+	'gffd_gform_post_submission',
+	10, 2
+);
 
 // Validate the data, reformat the data,
 // try and perform the purchase and throw errors.
@@ -162,8 +207,6 @@ function gffd_validation_and_payment($validation_result){
 				// Save the reference number we saved in FD trasnsaction log
 				$gffd_fd_form_info['gffd_fd_customer_ref']
 			);
-
-			
 
 			// Run a purchase by form
 			$result = gffd_fd_purchase_by_form(
