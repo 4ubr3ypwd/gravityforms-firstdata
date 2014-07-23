@@ -66,7 +66,7 @@ function gffd_form_customer_refererence_number( $key, $lead, $form ) {
 	if( $entry_customer_reference_number ){
 		return $entry_customer_reference_number;
 	}else{
-		return false;
+		return '';
 	}
 
 }
