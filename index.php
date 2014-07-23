@@ -2,7 +2,7 @@
 
 /*
 Plugin Name: Gravity Forms + First Data Global Gateway e4
-Plugin URI: https://bitbucket.org/excion/gravityforms-firstdata
+Plugin URI: https://wordpress.org/plugins/gravity-forms-first-data-global-gateway-addon/
 Description: Gravity Forms + First Data Global Gateway e4 is a plugin and addon for Gravity Forms that will allow you to process products using the First Data Global Gateway e4 API.
 Version: 1.0.2
 Author: Aubrey Portwood of Excion
@@ -68,7 +68,7 @@ function gffd_check_requirements(){
 		&& class_exists("GFCommon")
 	){
 
-		// If we have the requirements, 
+		// If we have the requirements,
 		// let's prepare everything:
 
 		// Integrate with Gravity Forms
