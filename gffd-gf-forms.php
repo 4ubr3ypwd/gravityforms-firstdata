@@ -17,7 +17,7 @@ function gffd_gform_entry_detail_content_before( $form, $lead ) {
 			<tbody>
 			<tr>
 				<td colspan="2" class="entry-view-field-name">
-					<?php _e( 'Customer Reference Number '); ?>
+					<?php _e( 'Reference Number'); ?>
 				</td>
 			</tr>
 			<tr>
