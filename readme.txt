@@ -4,7 +4,7 @@ Donate link: http://excion.co?ref=wp_org_donate_gffd
 Tags: gravity forms, addon, first data, global gateway, global gateway e4, payments, credit card
 Requires at least: 3.7
 Tested up to: 3.9
-Stable tag: 1.0.2
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
