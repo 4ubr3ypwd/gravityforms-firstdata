@@ -39,7 +39,7 @@ function gffd_form_entry( $entry, $form_id ) {
 	}
 
 	// Reference number
-	$entry['gffd_fd_customer_reference_number'] => array(
+	$entry['gffd_fd_customer_reference_number'] = array(
 		'label' => __('Reference Number'),
 		'is_numberic' => false,
 		'is_default_column' => false,
