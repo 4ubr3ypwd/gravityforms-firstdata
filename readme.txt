@@ -40,8 +40,7 @@ Once you have done so, test your forms to ensure it is processing payment.
 
 = Development =
 
-Development for this plugins happens over at [Github](https://github.com/excion/gravityforms-firstdata)
-and our Issue Tracker is on [Trello](https://trello.com/b/iaFkdo91).
+Development for this plugins happens over at [Github](https://github.com/excion/gravityforms-firstdata).
 
 == Installation ==
 
