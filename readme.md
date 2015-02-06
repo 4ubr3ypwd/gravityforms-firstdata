@@ -3,6 +3,16 @@ WordPress.org](http://wordpress.org/plugins/gravity-forms-first-data-global-gate
 
 _________________________
 
+# Fund Version 1.2!!!
+
+**This plugin is currently not compatible with the latest version of WordPress, Gravity Forms, and First Data, but I'd like to change that!**
+
+I am trying to get a weeks worth of time funded for me to fix this plugin and push out a new release.
+
+Please check out: [http://www.gofundme.com/gffde4](http://www.gofundme.com/gffde4)
+
+# Gravity Forms + First Data Global Gateway e4
+
 **Gravity Forms + First Data Global Gateway e4** is a plugin and addon for
 Gravity Forms that will allow you to process products using the
 [First Data Global Gateway e4](https://www.firstdata.com/en_us/products/merchants/ecommerce/online-payment-processing.html) service.
