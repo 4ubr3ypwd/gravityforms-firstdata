@@ -1,6 +1,6 @@
 === Gravity Forms + First Data Global Gateway e4 ===
 Contributors: aubreypwd, excion
-Donate link: http://excion.co?ref=wp_org_donate_gffd
+Donate link: http://www.gofundme.com/gffde4
 Tags: gravity forms, addon, first data, global gateway, global gateway e4, payments, credit card
 Requires at least: 3.7
 Tested up to: 3.9
@@ -44,7 +44,7 @@ Once you have done so, test your forms to ensure it is processing payment.
 
 = Development =
 
-Development for this plugins happens over at [Github](https://github.com/excion/gravityforms-firstdata).
+Development for this plugins happens over at [Github](https://github.com/aubreypwd/gravityforms-firstdata).
 
 == Installation ==
 
