@@ -1,0 +1,3 @@
+[submodule "php-first-data-api"]
+	path = php-first-data-api
+	url = https://github.com/VinceG/php-first-data-api
