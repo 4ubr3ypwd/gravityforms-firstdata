@@ -1,0 +1,29 @@
+{
+    "name": "vinceg/firstdataapi",
+    "type": "library",
+    "description": "First Data Api",
+    "keywords": [],
+    "homepage": "http://vadimg.com/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vincent Gabriel",
+            "email": "vadimg88@gmail.com"
+        },
+        {
+            "name": "Vincent Gabriel",
+            "homepage": "http://vadimg.com/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "curl-ext": "*"
+    },
+    "autoload": {
+        "psr-0": {
+            "VinceG\\FirstDataApi\\": "VinceG/FirstDataApi/src"
+        }
+    },
+    "target-dir": "VinceG/FirstDataApi",
+    "minimum-stability": "dev"
+}
