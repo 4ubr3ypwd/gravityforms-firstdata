@@ -118,22 +118,11 @@ class GFFD_Core {
 
 	// Use the validation functions against the values stored
 	// in $_POST.
-	function gffd_is_valid_pre_format_feed_data($gffd_index, $value){
-		$gffd_get_purchase_field_requirements
-			=gffd_get_purchase_field_requirements($gffd_index);
+	function gffd_is_valid_pre_format_feed_data( $gffd_index, $value ) {
+		$gffd_get_purchase_field_requirements = gffd_get_purchase_field_requirements( $gffd_index );
 
-		if(is_callable(
-			$gffd_get_purchase_field_requirements['validate_pre_format']
-		)){
-			return
-				call_user_func(
-					$gffd_get_purchase_field_requirements[
-						'validate_pre_format'
-					],
-
-					$value
-				)
-			;
+		if ( is_callable( $gffd_get_purchase_field_requirements['validate_pre_format'] ) ) {
+			return call_user_func( $gffd_get_purchase_field_requirements['validate_pre_format'], $value );
 		}else{
 			return false;
 		}
