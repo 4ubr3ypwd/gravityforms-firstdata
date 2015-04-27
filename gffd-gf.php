@@ -147,15 +147,13 @@ class GFFD_Core {
 
 	// Need to configure this function to figure out if a feed
 	// is active nor not.
-	function gffd_feed_is_active($form_id){
-		if(
-			gffd_feeds_get_form_feed_settings(
-				$form_id,
-				'as_object'
-			)->feed_active == 'active'
-		){
+	function gffd_feed_is_active( $form_id ) {
+		$this->$this_form_feed_settings = $this->gffd_feeds_get_form_feed_settings( $form_id, 'as_object' );
+		$feed_active = $this_form_feed_settings->feed_active;
+
+		if ( $feed_active == 'active' ) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
