@@ -109,8 +109,8 @@ class GFFD_Core {
 	function gffd_get_validation_message_feed_data( $gffd_index ) {
 		$gffd_get_purchase_field_requirements = gffd_get_purchase_field_requirements( $gffd_index );
 
-		if ( is_callable( $gffd_get_purchase_field_requirements['validate_bad_message'] ) ) {
-			return call_user_func( $gffd_get_purchase_field_requirements['validate_bad_message'] );
+		if ( isset( $gffd_get_purchase_field_requirements['validate_bad_message'] ) ) {
+			return $gffd_get_purchase_field_requirements['validate_bad_message'];
 		} else {
 			return false;
 		}
@@ -120,12 +120,8 @@ class GFFD_Core {
 	// in $_POST.
 	function gffd_is_valid_pre_format_feed_data( $gffd_index, $value ) {
 		$gffd_get_purchase_field_requirements = gffd_get_purchase_field_requirements( $gffd_index );
-
-		if ( is_callable( $gffd_get_purchase_field_requirements['validate_pre_format'] ) ) {
-			return call_user_func( $gffd_get_purchase_field_requirements['validate_pre_format'], $value );
-		}else{
-			return false;
-		}
+		$value = apply_filters( array( $this, $gffd_get_purchase_field_requirements['validate_pre_format'] ), $value );
+		return $value;
 	}
 
 	// Converts the float format for fields like 1.1 to input_1_1
@@ -209,338 +205,210 @@ class GFFD_Core {
 		return json_decode( json_encode( $a ) );
 	}
 
+	function gffd_validate_is_set( $value ) {
+		if ( ! empty( $value ) ) {
+			return $value;
+		} else {
+			return false;
+		}
+
+		return false;
+	}
+
+	function gffd_validate_money_value( $value ) {
+		if( ! empty( $value ) ) {
+
+			//Remove $
+			return str_replace( "$", "", $value );
+		}else{
+			return false;
+		}
+	}
+
+	function gffd_validate_us( $value ) {
+		if ( ! empty( $value) ) {
+			return $value;
+		} else {
+			return "US";
+		}
+	}
+
+	function gffd_validate_exp( $value ) {
+		if ( is_array( $value ) ) {
+
+			// The value (when submitted by $_POST)
+			// is an array:
+			//
+			// array(2) { [0]=> string(1) "1" [1]=> string(4) "2016" }
+			//
+			// So, let's chop those two array
+			// structs into a value that is good for FD.
+			if ( isset( $value[0] ) && isset( $value[1] ) ) {
+
+				// Tak on a 0 if we have 4, or 5, but not if
+				// we have 12
+				return str_pad( $value[0], 2, '0', STR_PAD_LEFT ) . substr( $value[1], -2 );
+			}else{
+				return false;
+			}
+		}else{
+			return false;
+		}
+	}
+
 	// These are the minimum fields we need to make a purchase.
-	function gffd_get_purchase_field_requirements(
-			$as_object_or_gffd_index=false,
-			$as_object=false
-	){
-		$fields=array(
+	function gffd_get_purchase_field_requirements( $as_object_or_gffd_index = false, $as_object = false ) {
+
+		$fields = array(
 
 			// Here we package the full customer name
 			// from the GF credit card field as one
 			// field, which here we call firstname
 			array(
-				'gffd_index'=>'gffd_fd_cc_firstname',
-				'label'=>__('Name'),
-				'meta'=>__(
-					"Usually called <strong>Credit Card (Cardholder's Name)</strong>"
-				),
-				'validate_bad_message'=>function(){
-					return gffd_language_terms(
-						'term_validate_bad_message_most_card_fields'
-					);
-				},
-				'validate_pre_format'=>function($value){
-					if($value!=''){
-						return $value;
-					}else{
-						return false;
-					}
-				}
+				'gffd_index'           => 'gffd_fd_cc_firstname',
+				'label'                => __( 'Name', 'gffd' ),
+				'meta'                 => __( "Usually called <strong>Credit Card (Cardholder's Name)</strong>", 'gffd' ),
+				'validate_bad_message' => $this->gffd_language_terms( 'term_validate_bad_message_most_card_fields' ),
+
+				// Filter
+				'validate_pre_format'  => 'gffd_validate_is_set',
 			),
 
 			// CCtype is different as GF does not submit the cctype,
 			// though it can be selected from the feed.
 			array(
-				'gffd_index'=>'gffd_fd_cc_type',
-				'label'=>__('Credit Card Type'),
-				'meta'=>__(
-					'Usually called <strong>Credit Card (Card Type)</strong>'
-				),
-				'validate_bad_message'=>function(){
-					return gffd_language_terms(
-						'term_validate_bad_message_most_card_fields'
-					);
-				},
-				'validate_pre_format'=>function($value){
-
-					// Right now the value that is selected from the form
-					// feed setup does not work because GF does not send
-					// the cc type when it's submitted like you would think.
-					//
-					// So, gffd-gf-forms.js should give us a
-					// $_REQUEST['gffd_cc_type']
-
-					if(
-						gffd_request('gffd_cc_type')
-					){
-							return
-								gffd_request('gffd_cc_type');
-					}else{
-						return
-							false;
-					}
-				}
+				'gffd_index'           => 'gffd_fd_cc_type',
+				'label'                => __( 'Credit Card Type', 'gffd' ),
+				'meta'                 => __( 'Usually called <strong>Credit Card (Card Type)</strong>', 'gffd' ),
+				'validate_bad_message' => $this->gffd_language_terms( 'term_validate_bad_message_most_card_fields' ),
+				'validate_pre_format'  => gffd_request( 'gffd_cc_type' ),
 			),
 
 			array(
-				'gffd_index'=>'gffd_fd_cc_number',
-				'label'=>__('Credit Card Number'),
-				'meta'=>__(
-					'Usually called <strong>Credit Card (Card Number)</strong>'
-				),
-				'validate_bad_message'=>function(){
-					return gffd_language_terms(
-						'term_validate_bad_message_most_card_fields'
-					);
-				},
-				'validate_pre_format'=>function($value){
-					if($value!=''){
-						return $value;
-					}else{
-						return false;
-					}
-				}
+				'gffd_index'           => 'gffd_fd_cc_number',
+				'label'                => __( 'Credit Card Number', 'gffd' ),
+				'meta'                 => __( 'Usually called <strong>Credit Card (Card Number)</strong>', 'gffd' ),
+				'validate_bad_message' => $this->gffd_language_terms( 'term_validate_bad_message_most_card_fields' ),
+				'validate_pre_format'  => 'gffd_validate_is_set',
 			),
 
 			// Do some re-formatting for the expiration date.
 			array(
-				'gffd_index'=>'gffd_fd_cc_exp',
-				'label'=>__('Card Expiration Date'),
-				'meta'=>__(
-					'Usually called <strong>Credit Card (Expiration Date)</strong>'
-					),
-				'validate_bad_message'=>function(){
-					return gffd_language_terms(
-						'term_validate_bad_message_most_card_fields'
-					);
-				},
-				'validate_pre_format'=>function($value){
-					if(is_array($value)){
-
-						// The value (when submitted by $_POST)
-						// is an array:
-						//
-						// array(2) { [0]=> string(1) "1" [1]=> string(4) "2016" }
-						//
-						// So, let's chop those two array
-						// structs into a value that is good for FD.
-						if(isset($value[0]) && isset($value[1])){
-							return
-								// Tak on a 0 if we have 4, or 5, but not if
-								// we have 12
-								str_pad($value[0], 2, '0', STR_PAD_LEFT)
-								. substr($value[1], -2);
-						}else{
-							return false;
-						}
-					}else{
-						return false;
-					}
-				}
+				'gffd_index'           => 'gffd_fd_cc_exp',
+				'label'                => __( 'Card Expiration Date', 'gffd' ),
+				'meta'                 => __( 'Usually called <strong>Credit Card (Expiration Date)</strong>', 'gffd' ),
+				'validate_bad_message' => $this->gffd_language_terms( 'term_validate_bad_message_most_card_fields' ),
+				'validate_pre_format'  => 'gffd_validate_exp',
 			),
 
 			array(
-				'gffd_index'=>'gffd_fd_cc_cvv',
-				'label'=>__('CVV/Security Code'),
-				'meta'=>__(
-					'Usually called <strong>Credit Card (Security Code)</strong>'
-				),
-				'validate_bad_message'=>function(){
-					return gffd_language_terms(
-						'term_validate_bad_message_most_card_fields'
-					);
-				},
-				'validate_pre_format'=>function($value){
-					if($value!=''){
-						return $value;
-					}else{
-						return false;
-					}
-				}
+				'gffd_index'           => 'gffd_fd_cc_cvv',
+				'label'                => __( 'CVV/Security Code', 'gffd' ),
+				'meta'                 => __( 'Usually called <strong>Credit Card (Security Code)</strong>', 'gffd' ),
+				'validate_bad_message' => $this->gffd_language_terms(),
+				'validate_pre_format'  => 'gffd_validate_is_set',
 			),
 
 			// Just make sure amount is a decimal float.
 			array(
-				'gffd_index'=>'gffd_fd_cc_amount',
-				'label'=>__('Charge Amount'),
-				'meta'=>__(
-					'Here you will need to select a <strong>'
-					.'total field</strong> to your form'
-				),
-				'validate_bad_message'=>function(){
-					return gffd_language_terms(
-						'term_validate_bad_message_most_card_fields'
-					);
-				},
-				'validate_pre_format'=>function($value){
-					if($value!=''){
-						return
-							//Remove $
-							str_replace(
-								"$",
-								"",
-								$value
-							);
-					}else{
-						return false;
-					}
-				}
+				'gffd_index'           => 'gffd_fd_cc_amount',
+				'label'                => __('Charge Amount'),
+				'meta'                 => __( 'Here you will need to select a <strong>' .'total field</strong> to your form', 'gffd' ),
+				'validate_bad_message' => $this->gffd_language_terms( 'term_validate_bad_message_most_card_fields' ),
+				'validate_pre_format'  => 'gffd_validate_money_value',
 			),
 
 			// Address is actually formatted post validation. Here, we just
 			// want to make sure we have values. They will be re-formatted
 			// for the API like address|city|state|zip, etc later.
 			array(
-				'gffd_index'=>'gffd_fd_cc_address',
-				'label'=>__('Address'),
-				'meta'=>gffd_language_terms(
-					'you_will_need_address_field_select_here'
-				),
-				'validate_bad_message'=>function(){
-					return gffd_language_terms(
-						'term_validate_bad_message_most_address'
-					);
-				},
-				'validate_pre_format'=>function($value){
-					if($value!=''){
-						return $value;
-					}else{
-						return false;
-					}
-				}
+				'gffd_index'           => 'gffd_fd_cc_address',
+				'label'                => __( 'Address', 'gffd' ),
+				'meta'                 => $this->gffd_language_terms( 'you_will_need_address_field_select_here' ),
+				'validate_bad_message' => $this->gffd_language_terms( 'term_validate_bad_message_most_address' ),
+				'validate_pre_format'  => 'gffd_validate_is_set',
 			),
 
 			array(
-				'gffd_index'=>'gffd_fd_cc_address2',
-				'label'=>__('Address2'),
-				'meta'=>gffd_language_terms(
-					'you_will_need_address_field_select_here'
-				),
-				'validate_bad_message'=>function(){
-					return true;
-				},
-				'validate_pre_format'=>function($value){
-					return true;
-				}
+				'gffd_index'           => 'gffd_fd_cc_address2',
+				'label'                => __('Addr ess2', 'gffd' ),
+				'meta'                 => $this->gffd_language_terms( 'you_will_need_address_field_select_here' ),
+				'validate_bad_message' => true,
+				'validate_pre_format'  => true
 			),
 
 			array(
-				'gffd_index'=>'gffd_fd_cc_zip',
-				'label'=>__('Zip'),
-				'meta'=>gffd_language_terms(
-					'you_will_need_address_field_select_here'
-				),
-				'validate_bad_message'=>function(){
-					return gffd_language_terms(
-						'term_validate_bad_message_most_address'
-					);
-				},
-				'validate_pre_format'=>function($value){
-					if($value!=''){
-						return $value;
-					}else{
-						return false;
-					}
-				}
+				'gffd_index'           => 'gffd_fd_cc_zip',
+				'label'                => __( 'Zip', 'gffd' ),
+				'meta'                 => $this->gffd_language_terms( 'you_will_need_address_field_select_here' ),
+				'validate_bad_message' => $this->gffd_language_terms( 'term_validate_bad_message_most_address' ),
+				'validate_pre_format'  => 'gffd_validate_is_set',
 			),
 
 			array(
-				'gffd_index'=>'gffd_fd_cc_city',
-				'label'=>__('City'),
-				'meta'=>gffd_language_terms(
-					'you_will_need_address_field_select_here'
-				),
-				'validate_bad_message'=>function(){
-					return gffd_language_terms(
-						'term_validate_bad_message_most_address'
-					);
-				},
-				'validate_pre_format'=>function($value){
-					if($value!=''){
-						return $value;
-					}else{
-						return false;
-					}
-				}
+				'gffd_index'           => 'gffd_fd_cc_city',
+				'label'                => __( 'City', 'gffd' ),
+				'meta'                 => $this->gffd_language_terms( 'you_will_need_address_field_select_here' ),
+				'validate_bad_message' => $this->gffd_language_terms( 'term_validate_bad_message_most_address' ),
+				'validate_pre_format'  => 'gffd_validate_is_set',
 			),
 
 			array(
-				'gffd_index'=>'gffd_fd_cc_state',
-				'label'=>__('State'),
-				'meta'=>gffd_language_terms(
-					'you_will_need_address_field_select_here'
-				),
-				'validate_bad_message'=>function(){
-					return gffd_language_terms(
-						'term_validate_bad_message_most_address'
-					);
-				},
-				'validate_pre_format'=>function($value){
-					if($value!=''){
-						return $value;
-					}else{
-						return false;
-					}
-				}
+				'gffd_index'           => 'gffd_fd_cc_state',
+				'label'                => __( 'State', 'gffd' ),
+				'meta'                 => $this->gffd_language_terms( 'you_will_need_address_field_select_here' ),
+				'validate_bad_message' => $this->gffd_language_terms( 'term_validate_bad_message_most_address' ),
+				'validate_pre_format'  => 'gffd_validate_is_set',
 			),
 
 			// Just make US the default, if they submit country, use that.
 			array(
-				'gffd_index'=>'gffd_fd_cc_country',
-				'label'=>__('Country'),
-				'meta'=>gffd_language_terms(
-					'you_will_need_address_field_select_here'
-				),
-				'validate_bad_message'=>function(){
-					return gffd_language_terms(
-						'term_validate_bad_message_most_address'
-					);
-				},
-				'validate_pre_format'=>function($value){
-					if($value!=''){
-						return $value;
-					}else{
-						return "US";
-					}
-				}
+				'gffd_index'           => 'gffd_fd_cc_country',
+				'label'                => __( 'Country', 'gffd' ),
+				'meta'                 => $this->gffd_language_terms( 'you_will_need_address_field_select_here' ),
+				'validate_bad_message' => $this->gffd_language_terms( 'term_validate_bad_message_most_address' ),
+				'validate_pre_format'  => 'gffd_validate_us',
 			)
 		);
 
 		// If they ask for 'gffd_fd_cc_zip' or 'as_object'
-		if(is_string($as_object_or_gffd_index)){
+		if ( is_string( $as_object_or_gffd_index ) ) {
 
 			// If it is 'as_object'
-			if($as_object_or_gffd_index=='as_object'){
-				return gffd_array_as_object(
-					$fields
-				);
+			if( 'as_object' == $as_object_or_gffd_index ) {
+				return $this->gffd_array_as_object( $fields );
 
 			// If it's not 'as_object', let's assume
 			// it's a gffd_index.
-			}else{
+			} else {
 
 				//Pull out just the field they are asking for.
-				foreach($fields as $field){
-					if($field['gffd_index']==$as_object_or_gffd_index){
+				foreach ( $fields as $field ) {
+					if( $as_object_or_gffd_index == $field['gffd_index'] ){
 						$_the_field = $field;
 					}
 				}
 
 				// If they also said, 'gffd_fd_cc_zip', 'as_object',
 				// return as an object.
-				if($as_object){
-					return gffd_array_as_object(
-						$_the_field
-					);
+				if ( $as_object ) {
+					return gffd_array_as_object( $_the_field );
 
 				// If they just said 'gffd_fd_cc_zip' then return
 				// it as an array
-				}else{
+				} else {
 					return $_the_field;
 				}
 			}
 
 		// If they pass (true), then just pass as an
 		// object.
-		}elseif($as_object_or_gffd_index==true){
-			return gffd_array_as_object(
-				$fields
-			);
+		} elseif ( true == $as_object_or_gffd_index ) {
+			return gffd_array_as_object( $fields );
 
 		// If they just pass () then return
 		// as an array.
-		}else{
+		} else {
 			return $fields;
 		}
 	}
