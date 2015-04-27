@@ -87,30 +87,26 @@ class GFFD_Core {
 	// First, check that we have the requirements,
 	// if not stop (this way we don't throw an error).
 	function gffd_check_requirements(){
-		if(
-			class_exists("RGForms")
-			&& class_exists("RGFormsModel")
-			&& class_exists("GFCommon")
-		){
+		if( class_exists( 'RGForms' ) && class_exists( 'RGFormsModel' ) && class_exists( 'GFCommon' ) ){
 
 			// If we have the requirements,
 			// let's prepare everything:
 
 			// Integrate with Gravity Forms
-			function gffd_load(){
-				require_once "gffd-gf.php";
-			}
-
-			function gffd_check_n_load(){
-				gffd_load();
-			}
-
-			add_action('init','gffd_check_n_load');
+			add_action( 'init', array( $this, 'gffd_check_n_load' ) );
 
 		}else{
 			// Right now, just do nothing if all
 			// the requirements aren't met.
 		}
+	}
+
+	function gffd_load(){
+		require_once "gffd-gf.php";
+	}
+
+	function gffd_check_n_load(){
+		gffd_load();
 	}
 
 	function gffd_get_validation_message_feed_data($gffd_index){
