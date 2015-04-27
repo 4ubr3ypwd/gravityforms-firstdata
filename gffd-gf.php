@@ -75,10 +75,9 @@ class GFFD_Core {
 		require_once 'gffd-gf-forms.php';
 	}
 
-	public function debug() {
+	public function debug( $result ) {
 		// If you would like to see debug information,
 		// you may call this script with &debug=1
-		//
 		if( isset( $_REQUEST['gffd_debug'] ) && isset( $result['print_r'] ) ) {
 			include "gffd-debug.html.php";
 		}
@@ -109,7 +108,7 @@ class GFFD_Core {
 		gffd_load();
 	}
 
-	function gffd_get_validation_message_feed_data($gffd_index){
+	function gffd_get_validation_message_feed_data( $gffd_index ) {
 		$gffd_get_purchase_field_requirements
 			=gffd_get_purchase_field_requirements(
 				$gffd_index
