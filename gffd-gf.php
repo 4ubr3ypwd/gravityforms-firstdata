@@ -130,22 +130,18 @@ class GFFD_Core {
 
 	// Converts the float format for fields like 1.1 to input_1_1
 	// so we can catch them on $_POST
-	function gffd_convert_float_value_to_post_input($gf_float_value){
-		return 'input_'.str_replace(".","_",$gf_float_value);
+	function gffd_convert_float_value_to_post_input( $gf_float_value ) {
+		return 'input_' . str_replace( '.', '_', $gf_float_value );
 	}
 
-	function gffd_feeds_get_form_feed_settings($form_id,$as_object=false){
-		$current_form_settings['feed_indexes'] = get_option(
-			'gffd_form_'.$form_id.'_feed_indexes'
-		);
-		$current_form_settings['feed_active'] = get_option(
-			'gffd_form_'.$form_id.'_feed_active'
-		);
+	function gffd_feeds_get_form_feed_settings( $form_id, $as_object=false ) {
+		$current_form_settings['feed_indexes'] = get_option( 'gffd_form_' . $form_id . '_feed_indexes' );
+		$current_form_settings['feed_active'] = get_option( 'gffd_form_' . $form_id . '_feed_active' );
 
-		if(!$as_object){
+		if( ! $as_object ) {
 			return $current_form_settings;
-		}elseif($as_object=='as_object'){
-			return json_decode(json_encode( $current_form_settings ));
+		} elseif ( 'as_object'  == $as_object ) {
+			return json_decode( json_encode( $current_form_settings ) );
 		}
 	}
 
