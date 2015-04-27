@@ -107,23 +107,11 @@ class GFFD_Core {
 	}
 
 	function gffd_get_validation_message_feed_data( $gffd_index ) {
-		$gffd_get_purchase_field_requirements
-			=gffd_get_purchase_field_requirements(
-				$gffd_index
-			);
+		$gffd_get_purchase_field_requirements = gffd_get_purchase_field_requirements( $gffd_index );
 
-		if(
-			is_callable(
-				$gffd_get_purchase_field_requirements
-					['validate_bad_message']
-			)
-		){
-			return
-				call_user_func(
-					$gffd_get_purchase_field_requirements
-						['validate_bad_message']
-				);
-		}else{
+		if ( is_callable( $gffd_get_purchase_field_requirements['validate_bad_message'] ) ) {
+			return call_user_func( $gffd_get_purchase_field_requirements['validate_bad_message'] );
+		} else {
 			return false;
 		}
 	}
