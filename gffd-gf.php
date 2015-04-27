@@ -159,12 +159,8 @@ class GFFD_Core {
 	}
 
 	// Get the Gravity Forms plugin URL
-	function gffd_plugin_url(){
-		$url = plugins_url()
-		. '/'
-		. basename(GFCommon::get_base_path())
-		. '/css/admin.css';
-
+	function gffd_plugin_url() {
+		$url = plugins_url() . '/' . basename( GFCommon::get_base_path() ) . '/css/admin.css';
 		return $url;
 	}
 
