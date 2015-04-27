@@ -95,9 +95,6 @@ class GFFD_Core {
 			// Integrate with Gravity Forms
 			add_action( 'init', array( $this, 'gffd_check_n_load' ) );
 
-		}else{
-			// Right now, just do nothing if all
-			// the requirements aren't met.
 		}
 	}
 
