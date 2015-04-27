@@ -2,7 +2,11 @@
 
 class GFFD_Admin {
 
-	function __construct() {
+	public $gffd_core;
+
+	function __construct( $gffd_core ) {
+		$this->gffd_core = $gffd_core;
+
 		add_action( 'admin_init', array( $this, 'gffd_admin_scripts' ) );
 		add_action( 'admin_init', array( $this, 'gffd_admin_init' ) );
 		add_action( 'admin_init', array( $this, 'gffd_save_admin_settings' ) );

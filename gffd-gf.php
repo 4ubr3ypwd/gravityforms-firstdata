@@ -35,13 +35,17 @@ class GFFD_Core {
 
 		// Include all the filez....
 		$this->includes();
-		$this->gffd_admin = new GFFD_Admin();
 
+		// Setup the admin stuff.
+		$this->gffd_admin = new GFFD_Admin( $this );
+
+		// Hooks
 		add_action( 'plugins_loaded', array( $this, 'gffd_check_requirements' ) );
 		add_action( 'admin_init', array( $this, 'gffd_enable_cc' ) );
 		add_action( 'init', array( $this, 'request_method' ) );
 		add_action( 'init', array( $this, 'debug' ) );
 
+		// Glossary of terms
 		$this->$gffd_glossary = $this->gffd_glossary(false, true);
 	}
 
@@ -50,9 +54,6 @@ class GFFD_Core {
 		// First Data e4 PHP Wrapper
 		// https://github.com/VinceG/php-first-data-api
 		require_once "php-first-data-api/src/VinceG/FirstDataApi/FirstData.php";
-
-		// Include debugging.
-		require_once "gffd-fd-debugging.php";
 
 		// Fixes the __FILE__ issue with symlinked
 		// plugins in WP.
@@ -78,25 +79,8 @@ class GFFD_Core {
 		// If you would like to see debug information,
 		// you may call this script with &debug=1
 		//
-		if(
-			isset($_REQUEST['gffd_debug'])
-			&& isset($result['print_r'])
-		){
+		if( isset( $_REQUEST['gffd_debug'] ) && isset( $result['print_r'] ) ) {
 			include "gffd-debug.html.php";
-		}
-	}
-
-	public function request_method() {
-		// To try a pre-auth and purchase on $_REQUEST, use
-		// http://example.com/?gffd_action=fd_request
-		// and sent $_POST data
-		//
-		if(
-			isset($_REQUEST)
-			&& isset($_REQUEST['gffd_action'])
-			&& $_REQUEST['gffd_']=='fd_request'
-		){
-			fd_request();
 		}
 	}
 
@@ -104,9 +88,6 @@ class GFFD_Core {
 	// if not stop (this way we don't throw an error).
 	function gffd_check_requirements(){
 		if(
-
-			// These are the Gravity Forms classes we use
-			// to do things.
 			class_exists("RGForms")
 			&& class_exists("RGFormsModel")
 			&& class_exists("GFCommon")
