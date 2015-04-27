@@ -164,14 +164,13 @@ class GFFD_Core {
 		return $url;
 	}
 
-	// Shorthand way to get a form from
-	// GF
-	function gffd_get_form($form_id){
-		return RGFormsModel::get_form_meta($form_id);
+	// Shorthand way to get a form from GF
+	function gffd_get_form( $form_id ) {
+		return RGFormsModel::get_form_meta( $form_id );
 	}
 
 	// Enable the CC field in gravity forms.
-	function gffd_enable_cc(){
+	function gffd_enable_cc() {
 		add_filter( 'gform_enable_credit_card_field', '__return_true' );
 	}
 
@@ -182,32 +181,32 @@ class GFFD_Core {
 	// gffd_glossary() which will return the whole glossary array.
 	// gffd_glossary('plugin_name') will return the specific term in the array.
 	// gffd_glossary('', 'as_object') will give you the glossary as an object
-	function gffd_glossary($key=null,$as_object=false){
+	function gffd_glossary( $key=null, $as_object = false ) {
 
-		$glossary=array(
-			'plugin_name'=>"Gravity Forms + First Data Global Gateway e4",
-			'settings_name'=>"First Data Global Gateway",
-			'service_name'=>"First Data Global Gateway",
+		$glossary = array(
+			'plugin_name'   => "Gravity Forms + First Data Global Gateway e4",
+			'settings_name' => "First Data Global Gateway",
+			'service_name'  => "First Data Global Gateway",
 		);
 
-		if(!$key || $key==''){
-			if($as_object){
-				return json_decode(json_encode($glossary));
-			}else{
+		if ( ! $key || '' == $key ) {
+			if ( $as_object ) {
+				return json_decode( json_encode( $glossary ) );
+			} else {
 				return $glossary;
 			}
-		}else{
-			if($as_object){
-				return json_decode(json_encode($glossary[$key]));
+		} else {
+			if ( $as_object ) {
+				return json_decode( json_encode( $glossary[ $key ] ) );
 			}else{
-				return $glossary[$key];
+				return $glossary[ $key ];
 			}
 		}
 	}
 
 	// Convert an array to an object.
-	function gffd_array_as_object($a){
-		return json_decode(json_encode($a));
+	function gffd_array_as_object( $a ) {
+		return json_decode( json_encode( $a ) );
 	}
 
 	// These are the minimum fields we need to make a purchase.
