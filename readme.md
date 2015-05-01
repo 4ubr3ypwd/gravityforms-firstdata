@@ -3,13 +3,7 @@ WordPress.org](http://wordpress.org/plugins/gravity-forms-first-data-global-gate
 
 _________________________
 
-# Fund Version 1.2!!!
-
-**This plugin is currently not compatible with the latest version of WordPress, Gravity Forms, and First Data, but I'd like to change that!**
-
-I am trying to get a weeks worth of time funded for me to fix this plugin and push out a new release.
-
-Please check out: [http://www.gofundme.com/gffde4](http://www.gofundme.com/gffde4)
+This plugin (in it's current version) no longer works with the latest WordPress or Gravity Forms. It is currently being update (see develop branch).
 
 # Gravity Forms + First Data Global Gateway e4
 
