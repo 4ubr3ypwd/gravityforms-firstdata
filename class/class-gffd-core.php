@@ -3,13 +3,14 @@
 class GFFD_Core {
 
 	public $gffd_glossary;
+	public $gffd_language_terms;
 
 	// Instances:
 	public $gffd_admin;
 
 	function __construct() {
 
-		// Setup the admin stuff.
+		// Setup our other classes.
 		$this->gffd_admin = new GFFD_Admin( $this );
 		$this->gffd_admin_feeds = new GFFD_Admin_Feeds( $this );
 
@@ -20,6 +21,36 @@ class GFFD_Core {
 
 		// Glossary of terms
 		$this->gffd_glossary = $this->gffd_glossary( false, true );
+
+		// Language
+		$this->$gffd_language_terms = $this->gffd_language_terms();
+	}
+
+
+	// At times we may be repeating ourselves when saying
+	// the same language over and over.
+	//
+	// This will return the same language to them all.
+	function gffd_language_terms( $as_object_or_index = 'whole_as_object' ){
+		$terms = array(
+
+			// The button is set back to Save and is initially Save
+			// so this needs to be there for all functions
+			'term_feed_admin_save'                       => __( 'Save', 'gffd' ),
+			'term_validate_bad_message_most_card_fields' => __( 'You must provide the Credit Card Number, Expiration Date, Security Code, and Cardholder\'s Name.', 'gffd' ),
+			'term_validate_bad_message_most_address'     => __( 'You must provide Street Address, City, State, and Zip.', 'gffd' ),
+			'you_will_need_address_field_select_here'    => __( 'You will need to have an <strong>Address field</strong> to select from here', 'gffd' ),
+		);
+
+		if ( 'as_object' === $as_object_or_index || true === $as_object_or_index ) {
+			return json_decode( json_encode( $terms ) );
+		} else if ( is_string( $as_object_or_index ) ) {
+			if ( isset( $terms[ $as_object_or_index ] ) ) {
+				return $terms[ $as_object_or_index ];
+			}
+		} else if ( 'whole_as_object' == $as_object_or_index ) {
+			return json_decode( json_encode( $terms ) );
+		}
 	}
 
 	public function debug( $result ) {
@@ -442,5 +473,3 @@ class GFFD_Core {
 	}
 
 }
-
-new GFFD_Core();

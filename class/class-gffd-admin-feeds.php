@@ -43,13 +43,13 @@ class GFFD_Admin_Feeds {
 	// Also, include scripts that will be needed.
 	function gffd_admin_feeds_page(){
 
-		gffd_admin_enqueue_css();
+		$this->gffd_core->gffd_admin->gffd_admin_enqueue_css();
 
-		wp_enqueue_style( 'gffd-admin-feeds-css', plugins_url( 'gffd-gfadmin-feeds.css', ___GFFDFILE___ ), array(), '', false );
-		wp_enqueue_script( 'gffd-admi-feeds-js', plugins_url( 'gffd-gfadmin-feeds.js', ___GFFDFILE___ ), array(), '', false );
+		wp_enqueue_style( 'gffd-admin-feeds-css', plugins_url( 'css/gffd-gfadmin-feeds.css', ___GFFDFILE___ ), array(), '', false );
+		wp_enqueue_script( 'gffd-admin-feeds-js', plugins_url( 'js/gffd-gfadmin-feeds.js', ___GFFDFILE___ ), array(), '', false );
 
 		// JS Translate data
-		wp_localize_script( 'gffd-admi-feeds-js', '_e', array( 'admin_feeds_button_error' => __('There were errors, please review and try again.', 'gffd' ), 'admin_feeds_button_save' => gffd_language_terms( 'as_object' )->term_feed_admin_save ) );
+		wp_localize_script( 'gffd-admin-feeds-js', '_e', array( 'admin_feeds_button_error' => __('There were errors, please review and try again.', 'gffd' ), 'admin_feeds_button_save' => gffd_language_terms( 'as_object' )->term_feed_admin_save ) );
 
 		if ( gffd_admin_feeds_is_subpage( 'add-new-edit' ) ) {
 			// require "gffd-gfadmin-feed.html.php"; //here just to show how it's done.

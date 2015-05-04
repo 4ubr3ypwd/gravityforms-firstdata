@@ -51,3 +51,6 @@ require_once 'class/class-gffd-admin.php';
 
 //Add the Feed stuff
 require_once 'class/class-gffd-admin-feeds.php';
+
+// Start plugin
+new GFFD_Core();
