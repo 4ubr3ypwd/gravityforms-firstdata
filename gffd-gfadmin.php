@@ -238,9 +238,9 @@ class GFFD_Admin {
 		);
 	}
 
-	function gffd_get_gf_admin_setting($setting_id){
+	function gffd_get_gf_admin_setting( $setting_id ) {
 		$settings = gffd_admin_settings();
-		return $settings[$setting_id];
+		return $settings[ $setting_id ];
 	}
 
 }
