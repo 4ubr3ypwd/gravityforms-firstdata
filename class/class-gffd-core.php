@@ -1,6 +1,5 @@
 <?php
 
-
 class GFFD_Core {
 
 	public $gffd_glossary;
@@ -10,11 +9,9 @@ class GFFD_Core {
 
 	function __construct() {
 
-		// Include all the filez....
-		$this->includes();
-
 		// Setup the admin stuff.
 		$this->gffd_admin = new GFFD_Admin( $this );
+		$this->gffd_admin_feeds = new GFFD_Admin_Feeds( $this );
 
 		// Hooks
 		add_action( 'plugins_loaded', array( $this, 'gffd_check_requirements' ) );
@@ -23,32 +20,6 @@ class GFFD_Core {
 
 		// Glossary of terms
 		$this->gffd_glossary = $this->gffd_glossary( false, true );
-	}
-
-	function includes() {
-
-		// First Data e4 PHP Wrapper
-		// https://github.com/VinceG/php-first-data-api
-		require_once "php-first-data-api/src/VinceG/FirstDataApi/FirstData.php";
-
-		// Fixes the __FILE__ issue with symlinked
-		// plugins in WP.
-		require_once( 'fix-__FILE__.php' );
-
-		// Setup all the settings pages, etc.
-		require_once 'class/class-gffd-admin.php';
-
-		//Add the Feed stuff
-		require_once 'gffd-gfadmin-feeds.php';
-
-		// Include out terms library and
-		// keep it as a separate file
-		// so it's easy to find.
-		require_once 'gffd-gf-terms.php';
-
-		// Include the setup for interrupting
-		// form data to perform purchases
-		require_once 'gffd-gf-forms.php';
 	}
 
 	public function debug( $result ) {

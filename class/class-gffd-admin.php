@@ -17,7 +17,7 @@ class GFFD_Admin {
 	// so we can use cool things like tabs, etc.
 	function gffd_admin_enqueue_css() {
 		wp_enqueue_style( 'gf_css', gffd_plugin_url(), array(), '', false );
-		wp_enqueue_style( 'gffd_admin_css', plugins_url( 'gffd-gfadmin.css', ___GFFDFILE___ ), array(), '', false );
+		wp_enqueue_style( 'gffd_admin_css', plugins_url( 'css/gffd-gfadmin.css', ___GFFDFILE___ ), array(), '', false );
 	}
 
 	// Check if a request var matches, if so, express $classes.
@@ -138,7 +138,7 @@ class GFFD_Admin {
 	// Include our WP Admin scripts
 	// for the plugin.
 	function gffd_admin_scripts() {
-		wp_enqueue_script( 'gffd-gf-admin-js', plugins_url( 'gffd-gfadmin.js', ___GFFDFILE___ ), array( 'jquery' ), '', false );
+		wp_enqueue_script( 'gffd-gf-admin-js', plugins_url( 'js/gffd-gfadmin.js', ___GFFDFILE___ ), array( 'jquery' ), '', false );
 	}
 
 	// Add a settings panel to the Gravity Forms Menu.
