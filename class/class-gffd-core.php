@@ -33,7 +33,7 @@ class GFFD_Core {
 
 	// First, check that we have the requirements,
 	// if not stop (this way we don't throw an error).
-	function gffd_check_requirements(){
+	function gffd_check_requirements() {
 		if( class_exists( 'RGForms' ) && class_exists( 'RGFormsModel' ) && class_exists( 'GFCommon' ) ){
 
 			// If we have the requirements,
@@ -45,11 +45,11 @@ class GFFD_Core {
 		}
 	}
 
-	function gffd_load(){
+	function gffd_load() {
 		require_once 'gffd-gf.php';
 	}
 
-	function gffd_check_n_load(){
+	function gffd_check_n_load() {
 		$this->gffd_load();
 	}
 

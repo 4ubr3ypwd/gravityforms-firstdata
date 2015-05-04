@@ -60,65 +60,67 @@ class GFFD_Admin_Feeds {
 
 	//Detect if subpages are loaded for the
 	//Feeds admin section
-	function gffd_admin_feeds_is_subpage($asked_subpage=false){
-		if ( isset($_GET['subpage'])){
+	function gffd_admin_feeds_is_subpage( $asked_subpage = false ) {
+		if ( isset( $_GET['subpage'] ) ) {
 			$current_subpage = $_GET['subpage'];
-		}else{
+		} else {
 			$current_subpage = false;
 		}
 
-		if($asked_subpage==$current_subpage){
+		if ( $current_subpage == $asked_subpage ) {
 			return $current_subpage;
-		}else{
+		} else {
 			return false;
 		}
 	}
 
-	function gffd_admin_feeds_add_navigation_config($key=null){
-		$menu=array(
-			'name'=>'gffd_feeds',
-			'label'=>__(gffd_glossary('settings_name')),
-			'callback'=>'gffd_admin_feeds_page'
+	function gffd_admin_feeds_add_navigation_config( $key = null ) {
+		$menu = array(
+			'name'     => 'gffd_feeds',
+			'label'    => __( $this->gffd_core->gffd_glossary( 'settings_name' ), 'gffd' ),
+			'callback' => 'gffd_admin_feeds_page'
 		);
 
-		if($key){
-			return $menu[$key];
-		}else{
+		if ( $key ) {
+			return $menu[ $key ];
+		} else {
 			return $menu;
 		}
 	}
 
 	// Add the menu under the Gravity Form menu
 	// in the Dashboard.
-	function gffd_admin_feeds_add_navigation($menus){
-		$menus[]=gffd_admin_feeds_add_navigation_config();
+	function gffd_admin_feeds_add_navigation($menus) {
+		$menus[] = $this->gffd_admin_feeds_add_navigation_config();
 		return $menus;
 	}
 
 	// Save a feed!
-	function gffd_admin_feeds_save_feed(){
+	function gffd_admin_feeds_save_feed() {
 
 		//Don't do if we aren't saving a feed.
-		if(!isset($_REQUEST['gffd-feed-admin-edit-submit'])) return;
+		if( ! isset( $_REQUEST['gffd-feed-admin-edit-submit'] ) ) {
+			return;
+		}
 
 		//Get the form_id
 		$form_id = $_REQUEST['form_id'];
 
 		//Save the feed_active setting
-		if($_REQUEST['gffd_feed_active']=='on'){
-			update_option('gffd_form_'.$form_id.'_feed_active','active');
-		}else{
-			delete_option('gffd_form_'.$form_id.'_feed_active');
+		if ( 'on' == $_REQUEST['gffd_feed_active'] ) {
+			update_option( 'gffd_form_' . $form_id . '_feed_active', 'active' );
+		} else {
+			delete_option( 'gffd_form_' . $form_id . '_feed_active' );
 		}
 
 		// Save the indexes
 		$feed_indexes = $_REQUEST['gffd_form_feed_indexes'];
 
-		if(is_array($feed_indexes)){
-			update_option('gffd_form_'.$form_id.'_feed_indexes', $feed_indexes);
-			wp_redirect($_SERVER['HTTP_REFERER']);
-		}else{
-			delete_option('gffd_form_'.$form_id.'_feed_indexes');
+		if ( is_array( $feed_indexes ) ) {
+			update_option( 'gffd_form_' . $form_id . '_feed_indexes', $feed_indexes );
+			wp_redirect( $_SERVER['HTTP_REFERER'] );
+		} else {
+			delete_option( 'gffd_form_' . $form_id . '_feed_indexes' );
 		}
 
 	}
