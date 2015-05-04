@@ -29,6 +29,8 @@ License: GPL2
 class GFFD_Core {
 
 	public $gffd_glossary;
+
+	// Instances:
 	public $gffd_admin;
 
 	function __construct() {
