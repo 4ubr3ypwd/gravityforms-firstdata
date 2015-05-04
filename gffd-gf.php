@@ -42,11 +42,10 @@ class GFFD_Core {
 		// Hooks
 		add_action( 'plugins_loaded', array( $this, 'gffd_check_requirements' ) );
 		add_action( 'admin_init', array( $this, 'gffd_enable_cc' ) );
-		add_action( 'init', array( $this, 'request_method' ) );
 		add_action( 'init', array( $this, 'debug' ) );
 
 		// Glossary of terms
-		$this->$gffd_glossary = $this->gffd_glossary(false, true);
+		$this->gffd_glossary = $this->gffd_glossary( false, true );
 	}
 
 	function includes() {
@@ -103,7 +102,7 @@ class GFFD_Core {
 	}
 
 	function gffd_check_n_load(){
-		gffd_load();
+		$this->gffd_load();
 	}
 
 	function gffd_get_validation_message_feed_data( $gffd_index ) {
@@ -415,23 +414,17 @@ class GFFD_Core {
 
 	// Check and make sure that everything
 	// is setup for a purchase.
-	function gffd_is_setup(){
-		if(
-			// We are going to need the  gateway id (login).
-			get_option('gffd_gateway_id')
+	function gffd_is_setup() {
 
-			// We are going to also need the password.
-			&& get_option('gffd_gateway_password')
-
-			// The test option may be off,
-			// in that case it may not exist, which
-			// means that we are live!
-			//
-			// So, we're not testing for it's setting
-			// here so we don't get false.
-			//
-			// && get_option('gffd_test_mode')
-		){
+		// The test option may be off,
+		// in that case it may not exist, which
+		// means that we are live!
+		//
+		// So, we're not testing for it's setting
+		// here so we don't get false.
+		//
+		// && get_option('gffd_test_mode')
+		if( get_option('gffd_gateway_id') && get_option('gffd_gateway_password') ){
 			return true;
 		}else{
 			return false;
@@ -441,13 +434,13 @@ class GFFD_Core {
 	//Get all the available forms built using
 	//Gravity forms
 	function gffd_get_forms(){
-		$forms=RGFormsModel::get_forms();
+		$forms = RGFormsModel::get_forms();
 
 		//Return an empty array so we don't
 		//break foreach;
-		if(sizeof($forms)==0){
-			return false;
-		}else{
+		if( sizeof( $forms ) == 0 ) {
+			return array();
+		} else {
 			return $forms;
 		}
 	}
@@ -457,23 +450,15 @@ class GFFD_Core {
 	function gffd_get_form_fields ( $form ) {
 		$fields = array();
 
-		if ( is_array( $form["fields"] ) ) {
-			foreach ( $form["fields"] as $field ) {
+		if ( is_array( $form['fields'] ) ) {
+			foreach ( $form['fields'] as $field ) {
 				if ( is_array( gffd_rgar( $field, 'inputs' ) ) ) {
 					foreach ( $field["inputs"] as $input ) {
-						 $fields[] = array(
-							$input["id"],
-							GFCommon::get_label(
-								$field,
-								$input["id"]
-							)
-						);
+						$fields[] = array( $input["id"], GFCommon::get_label( $field, $input["id"] ) );
 					}
 				}
 				else if ( ! gffd_rgar( $field, 'displayOnly' ) ) {
-					$fields[] = array(
-						$field["id"], GFCommon::get_label( $field )
-					);
+					$fields[] = array( $field['id'], GFCommon::get_label( $field ) );
 				}
 			}
 		}
@@ -484,23 +469,24 @@ class GFFD_Core {
 	// Took from Gravity Forms Stripe plugin,
 	// because it's used in the function
 	// gffd_get_form_fields().
-	function gffd_rgar ( $array, $name ) {
-		if ( isset( $array[$name] ) )
+	function gffd_rgar( $array, $name ) {
+		if ( isset( $array[$name] ) ) {
 			return $array[$name];
+		}
 		return '';
 	}
 
 	// Just shorthand for $_REQUEST
 	// so I can, maybe, expand it later.
-	function gffd_request($key){
-		return $_REQUEST[$key];
+	function gffd_request( $key ) {
+		return $_REQUEST[ $key ];
 	}
 
 	// A bogus function to help us fix foreach
 	// when array is not there so we
 	// don't fail foreach
-	function gffd_is_array($possible_array){
-		if(is_array($possible_array)){
+	function gffd_is_array( $possible_array ) {
+		if( is_array( $possible_array ) ) {
 			return $possible_array;
 		}else{
 			return array();
