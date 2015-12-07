@@ -12,9 +12,7 @@ Gravity Forms Addon for the First Data Global Gateway e4
 
 == Description ==
 
-**I am trying to get a weeks worth of time funded for me to fix this plugin and push out a new release.**
-
-Please check out: [http://www.gofundme.com/gffde4](http://www.gofundme.com/gffde4)
+**This Plugin is outdated and has been dis-continued. It no longer works with the new First Data API**
 
 **Gravity Forms + First Data Global Gateway e4** is a plugin and addon for
 Gravity Forms that will allow you to process products using the

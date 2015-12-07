@@ -3,7 +3,9 @@ WordPress.org](http://wordpress.org/plugins/gravity-forms-first-data-global-gate
 
 _________________________
 
-This plugin (in it's current version) no longer works with the latest WordPress or Gravity Forms. It is currently being update (see develop branch).
+**This plugin no longer works with the latest WordPress or Gravity Forms, and has been dis-continued.** ~~It is currently being updated (see develop branch).~~
+
+_________________________________
 
 # Gravity Forms + First Data Global Gateway e4
 
